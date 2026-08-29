@@ -1,6 +1,6 @@
 # Obsidian Knowledge Base
 
-This repository is designed to be understandable inside an Obsidian vault as well as by AI coding agents.
+This repository is designed to remain understandable inside an Obsidian vault and by AI coding agents. GitHub is the canonical project memory; Obsidian is a portable representation.
 
 ## Vault structure
 ```text
@@ -18,51 +18,58 @@ Jyothi Mines & Minerals/
 └── 10-V2-Experience.md
 ```
 
-## V2 knowledge note
-Create `10-V2-Experience.md` as the human-readable design record for the interactive homepage. It should link to:
-- [[05-Vermiculite-Knowledge]] for general science
-- [[07-Applications]] for documented uses
-- [[06-Products]] for verified Jyothi product data
-- [[09-Knowledge-Graph]] for Graphify relationships
-- [[08-Deployment]] for portable infrastructure
+## Current homepage experience
+The homepage is intentionally concise:
+1. Small Jyothi Mines & Minerals hero that explains the company and vermiculite briefly.
+2. Creative Three.js vermiculite explanation showing layered structure and interlayer water.
+3. Three.js application visuals for the major use areas.
+4. Each application has exactly two primary actions: full explanation and sizes/enquire.
+5. Persistent floating WhatsApp, phone and email contact icons.
 
-Recommended frontmatter:
-```yaml
----
-id: jmm.experience.v2
-entity: experience
-status: v2_experience
-source: repository
----
-```
+## Application page model
+Every application has:
+- [[07-Applications]]-style overview
+- Why vermiculite is relevant
+- Relevant material properties
+- Documented/selected uses
+- Application-specific size guidance
+- Qualification caveat
+- WhatsApp enquiry with application context
 
-## V2 experience principles
-- The visitor should understand vermiculite within seconds, then become curious enough to explore.
-- 3D is used to explain material behavior, not as decoration.
-- The homepage journey is Material → Structure → Properties → Application → Grade considerations → Technical evidence → Enquiry.
-- The application explorer starts with the visitor's need rather than company departments.
-- The particle-size visualizer is explicitly educational and must never be mistaken for a Jyothi specification.
-- Application pages must distinguish documented vermiculite uses from verified Jyothi-grade suitability.
-- The factory's confidential processing route must not be exposed by the public experience.
-- Mobile and low-power devices require graceful fallbacks; visual quality must not destroy usability.
+## Size-guide model
+Size pages explain the practical direction for fine/medium/coarse material and show the previously discussed Jyothi range as unverified until confirmed. They must never turn general industry guidance into a Jyothi specification.
 
-## Linking model
-Use wiki-links to preserve relationships:
+General guidance can be supported by external technical references. For example, forestry/horticulture references support finer grades for seed germination and coarser grades for larger growing containers, while industry sources document finer exfoliated grades in friction linings. These are general application references, not proof that a particular Jyothi grade is qualified.
+
+## 3D rules
+- Three.js/React Three Fiber is the source of interactive material visuals.
+- CSS is for layout and presentation, not for pretending to be the material simulation.
+- 3D must explain the material or application context, not be decorative motion.
+- Avoid exposing the factory's proprietary process.
+- Conceptual visualizations must never be labelled as laboratory measurements.
+- Keep mobile fallbacks and performance safeguards.
+
+## Contact rules
+Canonical public contact details supplied for this version:
+- Phone: +91 99636 39482
+- Email: vermiculitejyothi@gmail.com
+- WhatsApp: +91 99636 39482
+
+These should remain centralized or clearly documented if changed later.
+
+## Knowledge links
 - [[01-Project-Spec]] → project requirements
 - [[02-Architecture]] → implementation decisions
 - [[03-Security]] → security controls
 - [[04-Content-Rules]] → evidence policy
-- [[05-Vermiculite-Knowledge]] → scientific material knowledge
-- [[06-Products]] → verified Jyothi product data
+- [[05-Vermiculite-Knowledge]] → general science
+- [[06-Products]] → verified product data
 - [[07-Applications]] → application knowledge
-- [[08-Deployment]] → GitHub/Vercel/Supabase portability
+- [[08-Deployment]] → portable infrastructure
 - [[09-Knowledge-Graph]] → Graphify relationships
-- [[10-V2-Experience]] → interactive website experience
+- [[10-V2-Experience]] → current interactive experience
 
 ## AI handoff rule
-If an AI is given this repository without the original conversation, it should first read `AGENTS.md`, then `README.md`, then the relevant `docs/` files. The AI should treat those documents as the project's portable memory.
+If an AI receives this repository without the original conversation, it should read `AGENTS.md`, `README.md`, then the relevant docs before changing code. The repository must contain enough context to continue the project without chat history.
 
-Do not rely on chat history, a particular ChatGPT account, a particular GitHub account, a particular Vercel account, or a particular Supabase project to understand the project.
-
-## Important distinction
-Obsidian is a documentation/knowledge-management representation. It must not become a runtime dependency of the website. The website must continue to build and deploy without Obsidian.
+Obsidian and Graphify are documentation representations only. They must never become runtime dependencies.
