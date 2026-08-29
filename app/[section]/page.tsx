@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { getSiteContent } from '../../lib/site'
 import VermiculiteExplainer from '../../components/VermiculiteExplainer'
 import FloatingContact from '../../components/FloatingContact'
-import '../../v2.css'
+import '../v2.css'
 
 export const dynamicParams = false
 export const revalidate = 3600
