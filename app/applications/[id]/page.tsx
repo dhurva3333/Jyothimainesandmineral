@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { applicationDetails, getApplication } from '../../../lib/applicationData'
+import '../../v2.module.css'
 
 export const dynamicParams = false
 export const revalidate = 3600
@@ -20,10 +21,7 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
     <section className="page-hero"><p className="eyebrow">{app.eyebrow} / APPLICATION</p><h1>{app.title}</h1><p className="lead">{app.short}</p></section>
     <section className="page-body application-detail-body">
       <article className="detail-intro"><p className="eyebrow">WHY VERMICULITE</p><h2>{app.why}</h2></article>
-      <div className="detail-grid">
-        <article className="info-card"><h2>Relevant properties</h2><ul>{app.properties.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="info-card"><h2>Documented / selected uses</h2><ul>{app.uses.map((item) => <li key={item}>{item}</li>)}</ul></article>
-      </div>
+      <div className="detail-grid"><article className="info-card"><h2>Relevant properties</h2><ul>{app.properties.map((item) => <li key={item}>{item}</li>)}</ul></article><article className="info-card"><h2>Documented / selected uses</h2><ul>{app.uses.map((item) => <li key={item}>{item}</li>)}</ul></article></div>
       <article className="size-callout"><p className="eyebrow">SIZE MATTERS</p><h2>{app.sizeGuidance}</h2><p>{app.sizeBand}</p><Link className="button primary" href={`/applications/${app.id}/sizes`}>See size guidance & enquire →</Link></article>
       <article className="qualification-note"><strong>Qualification note</strong><p>{app.qualification}</p></article>
       <div className="detail-actions"><Link className="button ghost" href="/applications">← All applications</Link><a className="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Ask Jyothi about this application ↗</a></div>
