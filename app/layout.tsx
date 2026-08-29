@@ -2,12 +2,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Jyothi Mines & Minerals | Exfoliated Vermiculite',
-  description: 'Application-led exfoliated vermiculite supply for horticulture, construction, insulation, fire protection and selected industrial materials.',
+  title: 'Jyothi Mines & Minerals | Vermiculite',
+  description: 'Application-led vermiculite information and B2B supply from Jyothi Mines & Minerals.',
   robots: { index: true, follow: true },
-  openGraph: { title: 'Jyothi Mines & Minerals', description: 'Exfoliated vermiculite, matched to the application.', type: 'website' },
+  openGraph: { title: 'Jyothi Mines & Minerals', description: 'Vermiculite, explained clearly and supplied application-first.', type: 'website' }
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body>{children}</body></html>
 }
