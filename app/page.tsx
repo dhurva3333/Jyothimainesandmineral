@@ -1,7 +1,6 @@
-import dynamic from 'next/dynamic'
 import { getSiteContent } from '../lib/site'
+import VermiculiteSceneClient from '../components/VermiculiteSceneClient'
 
-const VermiculiteScene = dynamic(() => import('../components/VermiculiteScene'), { ssr: false })
 export const revalidate = 3600
 
 const nav = [['About','/about'],['Vermiculite','/vermiculite'],['Applications','/applications'],['Products','/products'],['Technical','/technical'],['Resources','/resources'],['Contact','/contact']]
@@ -28,7 +27,7 @@ export default async function Home() {
         <div className="actions"><a className="button primary" href="/vermiculite">Understand vermiculite ↗</a><WhatsApp number={whatsapp.number} /></div>
         <div className="trust"><span>LIGHTWEIGHT</span><i/> <span>POROUS</span><i/> <span>THERMAL</span><i/> <span>VERSATILE</span></div>
       </div>
-      <div className="hero-art"><div className="scene-shell"><div className="scene-fallback" aria-hidden="true"><span>V</span></div><VermiculiteScene /></div><div className="float-chip chip-one">EXFOLIATED MINERAL</div><div className="float-chip chip-two">POROUS STRUCTURE</div><div className="float-chip chip-three">APPLICATION-LED</div></div>
+      <div className="hero-art"><div className="scene-shell"><div className="scene-fallback" aria-hidden="true"><span>V</span></div><VermiculiteSceneClient /></div><div className="float-chip chip-one">EXFOLIATED MINERAL</div><div className="float-chip chip-two">POROUS STRUCTURE</div><div className="float-chip chip-three">APPLICATION-LED</div></div>
     </section>
 
     <section className="instant"><div><p className="eyebrow">IN ONE SENTENCE</p><h2>A naturally occurring layered mineral that becomes remarkably lightweight when exfoliated.</h2></div><div className="property-strip">{site.properties.map((p: string) => <span key={p}>{p}</span>)}</div></section>
