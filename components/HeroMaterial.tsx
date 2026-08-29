@@ -5,6 +5,8 @@ import { Float, OrbitControls } from '@react-three/drei'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
+const VERMICULITE_COLORS = ['#8A633A', '#A9783F', '#C29A5B', '#D1B477', '#6D5034', '#A89C86']
+
 function Flake({ i }: { i: number }) {
   const ref = useRef<THREE.Mesh>(null)
   const a = (i / 14) * Math.PI * 2
@@ -16,15 +18,16 @@ function Flake({ i }: { i: number }) {
   })
   return <mesh ref={ref} position={[Math.cos(a) * r, Math.sin(i * 1.7) * 0.22, Math.sin(a) * r]} rotation={[0.15 + i * .09, a, i * .2]} scale={[0.48 + (i % 4) * .08, 0.055, 0.25 + (i % 3) * .05]}>
     <sphereGeometry args={[0.62, 18, 10]} />
-    <meshStandardMaterial color={i % 3 === 0 ? '#c5d1ad' : i % 3 === 1 ? '#8d9b78' : '#aab99a'} roughness={0.88} metalness={0.02} />
+    <meshStandardMaterial color={VERMICULITE_COLORS[i % VERMICULITE_COLORS.length]} roughness={0.76} metalness={0.12} />
   </mesh>
 }
 
 function Scene() {
   return <>
-    <ambientLight intensity={1.15} />
-    <directionalLight position={[4, 5, 4]} intensity={2.6} />
-    <directionalLight position={[-4, 1, 2]} intensity={1.2} />
+    <ambientLight intensity={1.05} />
+    <directionalLight position={[4, 5, 4]} intensity={2.8} />
+    <directionalLight position={[-4, 1, 2]} intensity={1.35} />
+    <pointLight position={[0, 1.5, 2.5]} intensity={0.65} color="#D8B878" />
     <Float speed={0.65} rotationIntensity={0.18} floatIntensity={0.2}>
       <group rotation={[0.2, -0.35, 0]}>{Array.from({ length: 14 }, (_, i) => <Flake key={i} i={i} />)}</group>
     </Float>
