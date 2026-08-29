@@ -2,7 +2,6 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jyothiminesandminerals.com'),
   title: 'Jyothi Mines & Minerals | Exfoliated Vermiculite',
   description: 'Application-led exfoliated vermiculite supply for horticulture, construction, insulation, fire protection and selected industrial materials.',
   robots: { index: true, follow: true },
