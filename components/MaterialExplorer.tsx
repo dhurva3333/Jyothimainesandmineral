@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { CSSProperties, useMemo, useState } from 'react'
 
 type Application = {
   id: string
@@ -54,7 +54,7 @@ export default function MaterialExplorer({ applications = [] }: { applications?:
         <div className="lab-control">
           <div><span className="eyebrow">PARTICLE-SIZE EXPLORER</span><strong>Smaller → larger</strong></div>
           <input aria-label="Particle size visualizer" type="range" min="0" max="100" value={size} onChange={(event) => setSize(Number(event.target.value))} />
-          <div className="particle-row" aria-hidden="true" style={{ '--particle-scale': `${0.45 + size / 140}` } as React.CSSProperties}>
+          <div className="particle-row" aria-hidden="true" style={{ '--particle-scale': `${0.45 + size / 140}` } as CSSProperties}>
             {Array.from({ length: 12 }, (_, i) => <span key={i} />)}
           </div>
           <small>This is a visual explainer, not a Jyothi product specification.</small>
