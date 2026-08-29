@@ -8,8 +8,8 @@ export const fallback = {
     tagline: 'A naturally occurring mineral transformed into a lightweight, versatile material for horticultural and industrial applications.',
     properties: ['Lightweight after exfoliation','Porous','Moisture retaining','Thermally insulating','Fire resistant','Liquid absorbing']
   },
-  whatsapp: { number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '' },
-  contact: { email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '', location: 'Proddatur, Kadapa District, Andhra Pradesh' },
+  whatsapp: { number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '9963639482' },
+  contact: { email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'vermiculitejyothi@gmail.com', phone: '9963639482', location: 'Proddatur, Kadapa District, Andhra Pradesh' },
   applications: [
     { id:'horticulture', title:'Horticulture & Nursery', short:'Seed starting, propagation, rooting and professional growing media.', fit:'Very high priority' },
     { id:'agriculture', title:'Agricultural Inputs', short:'Moisture management and selected carrier/formulation applications.', fit:'Application dependent' },
