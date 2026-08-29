@@ -5,6 +5,7 @@ import ApplicationShowcase from '../components/ApplicationShowcase'
 import FloatingContact from '../components/FloatingContact'
 import HeroMaterial from '../components/HeroMaterial'
 import './v2.css'
+import './vermiculite-colors.css'
 
 export const revalidate = 3600
 
