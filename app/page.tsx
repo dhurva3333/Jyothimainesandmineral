@@ -3,7 +3,8 @@ import { applicationDetails } from '../lib/applicationData'
 import VermiculiteExplainer from '../components/VermiculiteExplainer'
 import ApplicationShowcase from '../components/ApplicationShowcase'
 import FloatingContact from '../components/FloatingContact'
-import './v2.module.css'
+import HeroMaterial from '../components/HeroMaterial'
+import './v2.css'
 
 export const revalidate = 3600
 
@@ -13,39 +14,61 @@ const whatsapp = 'https://wa.me/919963639482?text=Hello%20Jyothi%20Mines%20%26%2
 
 export default async function Home() {
   const { site } = await getSiteContent()
-  return <main className="home-v2-final">
-    <header className="nav" id="top">
-      <a className="brand" href="/" aria-label="Jyothi Mines & Minerals home"><span className="mark">J</span><span>JYOTHI <b>MINES & MINERALS</b></span></a>
-      <nav aria-label="Primary navigation"><a href="#vermiculite">Vermiculite</a><a href="#applications">Applications</a><a href="/products">Products</a><a href="/technical">Technical</a><a className="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Enquire</a></nav>
+  return <main className="home-v2">
+    <header className="site-nav" id="top">
+      <a className="brand-lockup" href="/" aria-label="Jyothi Mines & Minerals home">
+        <span className="brand-mark">J</span><span><strong>JYOTHI</strong><small>MINES & MINERALS</small></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#vermiculite">Vermiculite</a><a href="#applications">Applications</a><a href="/products">Products</a><a href="/technical">Technical</a>
+        <a className="nav-cta" href={whatsapp} target="_blank" rel="noopener noreferrer">Enquire</a>
+      </nav>
     </header>
 
-    <section className="hero hero-compact">
-      <div className="hero-copy">
-        <p className="eyebrow">JYOTHI MINES & MINERALS · INDIA</p>
-        <h1>Vermiculite<br /><em>for real applications.</em></h1>
-        <p className="lead">{site.tagline} Explore the material, understand where it fits, then ask Jyothi about the size and supply requirement.</p>
-        <div className="actions"><a className="button primary" href="#vermiculite">What is vermiculite?</a><a className="button ghost" href={whatsapp} target="_blank" rel="noopener noreferrer">Talk to Jyothi ↗</a></div>
-        <div className="hero-contact"><span>Proddatur · Andhra Pradesh</span><span>Vermiculite-focused B2B supply</span></div>
+    <section className="hero-v2-new">
+      <div className="hero-v2-copy">
+        <p className="kicker">JYOTHI MINES & MINERALS · PRODDATUR, INDIA</p>
+        <h1>Vermiculite.<br /><span>Material with purpose.</span></h1>
+        <p className="hero-deck">{site.tagline} Explore what vermiculite is, where it is used, and how to approach size selection for your application.</p>
+        <div className="hero-actions"><a className="button button-dark" href="#vermiculite">Discover vermiculite</a><a className="button button-outline" href={whatsapp} target="_blank" rel="noopener noreferrer">Talk to Jyothi ↗</a></div>
+        <div className="hero-meta"><span>HORTICULTURE</span><span>INDUSTRIAL</span><span>TECHNICAL SUPPLY</span></div>
       </div>
-      <div className="hero-mark"><div className="hero-mark-inner"><span>J</span><small>MINERAL<br />MATERIALS</small></div></div>
+      <div className="hero-v2-art"><HeroMaterial /></div>
     </section>
 
-    <section className="vermiculite-section" id="vermiculite">
-      <div className="section-heading"><p className="eyebrow">WHAT IS VERMICULITE?</p><h2>A layered mineral with a <em>different kind of structure.</em></h2><p>Vermiculite is a hydrated, laminar silicate mineral related structurally to mica. Its interlayer water and layered structure are central to the behaviour of the exfoliated material.</p></div>
+    <section className="proof-bar" aria-label="Vermiculite characteristics">
+      <div><small>01</small><strong>Lightweight</strong><span>Low-density expanded material</span></div>
+      <div><small>02</small><strong>Porous</strong><span>Open structure for useful media behaviour</span></div>
+      <div><small>03</small><strong>Moisture retaining</strong><span>Important in growing-media applications</span></div>
+      <div><small>04</small><strong>Thermal</strong><span>Used in selected insulation systems</span></div>
+    </section>
+
+    <section className="transformation-v2" id="vermiculite">
+      <div className="section-index">02 · UNDERSTAND THE MATERIAL</div>
+      <div className="transformation-copy">
+        <p className="kicker">WHAT IS VERMICULITE?</p>
+        <h2>A layered mineral with <em>a remarkable structure.</em></h2>
+        <p>Vermiculite is a hydrated, laminar silicate mineral related structurally to mica. Its layered structure and interlayer water help explain the distinctive behaviour of exfoliated vermiculite.</p>
+        <a className="underlink" href="/vermiculite">Explore the material →</a>
+      </div>
       <VermiculiteExplainer />
-      <div className="property-row">{site.properties.slice(0, 6).map((property: string) => <span key={property}>{property}</span>)}</div>
     </section>
 
-    <section className="application-section" id="applications">
-      <div className="section-heading application-heading"><p className="eyebrow">WHERE IT IS USED</p><h2>One material.<br /><em>Many applications.</em></h2><p>Choose an application to understand why vermiculite is used there. Each card explains the material role and size considerations without exposing proprietary manufacturing information.</p></div>
+    <section className="applications-v2-new" id="applications">
+      <div className="applications-heading"><div><p className="kicker">WHERE IT IS USED</p><h2>One material.<br /><span>Many applications.</span></h2></div><p>Choose an application to understand the role vermiculite can play, then view size guidance before contacting Jyothi. No proprietary manufacturing process is disclosed here.</p></div>
       <ApplicationShowcase applications={applicationDetails} />
     </section>
 
-    <section className="buyer-section"><div><p className="eyebrow">BUYING VERMICULITE</p><h2>Know the application.<br /><em>Then choose the size.</em></h2></div><div className="buyer-copy"><p>Particle size is application-dependent. Our size pages show a practical starting point and clearly separate general industry guidance from Jyothi-specific availability.</p><div className="buyer-links"><a href="/products">See products →</a><a href="/technical">Technical information →</a><a href={whatsapp} target="_blank" rel="noopener noreferrer">Ask Jyothi on WhatsApp →</a></div></div></section>
+    <section className="selection-v2">
+      <div className="selection-visual"><div className="particle-field">{Array.from({length:18},(_,i)=><i key={i} style={{'--i':i+1} as React.CSSProperties} />)}</div><div className="selection-scale"><span>FINE</span><span>MEDIUM</span><span>COARSE</span></div></div>
+      <div className="selection-copy"><p className="kicker">SIZE & APPLICATION</p><h2>Choose by the <em>job.</em></h2><p>Particle size is application-dependent. The website gives a practical starting direction while keeping general industry guidance separate from verified Jyothi availability.</p><div className="grade-lines"><div><strong>FINE</strong><span>Often considered for smaller particles, formulated systems and selected growing-media uses.</span></div><div><strong>MEDIUM</strong><span>Useful where a balance of structure, porosity and handling is required.</span></div><div><strong>COARSE</strong><span>Often considered where lightweight aggregate or loose-fill structure matters.</span></div></div><a className="button button-dark" href="/products">View products & sizes →</a></div>
+    </section>
 
-    <section className="contact-band"><div><p className="eyebrow">JYOTHI MINES & MINERALS</p><h2>Have an application in mind?</h2></div><div><p>Send the application, required size if known, quantity and delivery location. We can discuss the suitable material and availability.</p><a className="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp Jyothi ↗</a></div></section>
+    <section className="evidence-v2"><div><p className="kicker">TECHNICAL INFORMATION</p><h2>From material knowledge to <em>buying confidence.</em></h2><p>Technical buyers can go deeper into product information, application guidance and available documentation without confusing general vermiculite science with Jyothi-specific specifications.</p></div><div className="evidence-list"><a href="/technical"><span>01</span><strong>Technical information</strong><b>→</b></a><a href="/products"><span>02</span><strong>Products & grades</strong><b>→</b></a><a href="/resources"><span>03</span><strong>Resources</strong><b>→</b></a></div></section>
 
-    <footer><div className="brand"><span className="mark">J</span><span>JYOTHI <b>MINES & MINERALS</b></span></div><div className="footer-contact"><a href={phone}>+91 99636 39482</a><a href={email}>vermiculitejyothi@gmail.com</a></div><span>© {new Date().getFullYear()} Jyothi Mines & Minerals</span></footer>
+    <section className="cta-v2-new"><div><p className="kicker">JYOTHI MINES & MINERALS</p><h2>Have an application?<br /><em>Let's discuss the material.</em></h2></div><div className="cta-side"><p>Tell us the application, required size if known, quantity and delivery location. Jyothi can discuss suitable material and current availability.</p><a className="button button-dark" href={whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp Jyothi ↗</a></div></section>
+
+    <footer className="footer-v2"><div className="brand-lockup"><span className="brand-mark">J</span><span><strong>JYOTHI</strong><small>MINES & MINERALS</small></span></div><div><a href={phone}>+91 99636 39482</a> · <a href={email}>vermiculitejyothi@gmail.com</a></div><span>© {new Date().getFullYear()} Jyothi Mines & Minerals</span></footer>
     <FloatingContact />
   </main>
 }
