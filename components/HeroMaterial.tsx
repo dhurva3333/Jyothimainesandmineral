@@ -2,45 +2,86 @@
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, OrbitControls } from '@react-three/drei'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
-const VERMICULITE_COLORS = ['#8A633A', '#A9783F', '#C29A5B', '#D1B477', '#6D5034', '#A89C86']
+// Vermiculite is naturally platy and irregular, not spherical. The palette
+// reflects documented raw vermiculite colors from dark brown through gold.
+const VERMICULITE_COLORS = ['#403126', '#5A402B', '#765534', '#947047', '#AF8551', '#C19B63', '#D0B47E']
+
+function makeFlakeShape(seed: number) {
+  const shape = new THREE.Shape()
+  const points = 12
+  for (let i = 0; i < points; i++) {
+    const angle = (i / points) * Math.PI * 2
+    const wobble = 0.78 + (((seed * 19 + i * 11) % 29) / 29) * 0.44
+    const radius = 0.72 * wobble
+    const x = Math.cos(angle) * radius
+    const y = Math.sin(angle) * radius * (0.42 + ((seed + i) % 3) * 0.08)
+    if (i === 0) shape.moveTo(x, y)
+    else shape.lineTo(x, y)
+  }
+  shape.closePath()
+  return shape
+}
 
 function Flake({ i }: { i: number }) {
   const ref = useRef<THREE.Mesh>(null)
-  const a = (i / 14) * Math.PI * 2
-  const r = 0.45 + (i % 3) * 0.24
-  useFrame((s) => {
+  const angle = (i / 18) * Math.PI * 2
+  const radius = 0.18 + (i % 5) * 0.24
+  const scale = 0.48 + (i % 4) * 0.12
+  const geometry = useMemo(() => {
+    const g = new THREE.ExtrudeGeometry(makeFlakeShape(i + 1), {
+      depth: 0.045 + (i % 3) * 0.016,
+      bevelEnabled: true,
+      bevelSegments: 2,
+      bevelSize: 0.022,
+      bevelThickness: 0.014,
+      curveSegments: 2,
+    })
+    g.center()
+    return g
+  }, [i])
+
+  useFrame((state) => {
     if (!ref.current) return
-    ref.current.rotation.z += 0.0015 + i * 0.00008
-    ref.current.position.y += Math.sin(s.clock.elapsedTime * 0.65 + i) * 0.0008
+    ref.current.rotation.z += 0.0011 + (i % 3) * 0.00025
+    ref.current.rotation.x += 0.00025
+    ref.current.position.y += Math.sin(state.clock.elapsedTime * 0.42 + i) * 0.0005
   })
-  return <mesh ref={ref} position={[Math.cos(a) * r, Math.sin(i * 1.7) * 0.22, Math.sin(a) * r]} rotation={[0.15 + i * .09, a, i * .2]} scale={[0.48 + (i % 4) * .08, 0.055, 0.25 + (i % 3) * .05]}>
-    <sphereGeometry args={[0.62, 18, 10]} />
-    <meshStandardMaterial color={VERMICULITE_COLORS[i % VERMICULITE_COLORS.length]} roughness={0.76} metalness={0.12} />
+
+  return <mesh
+    ref={ref}
+    geometry={geometry}
+    position={[Math.cos(angle) * radius, Math.sin(i * 1.91) * 0.34, Math.sin(angle) * radius]}
+    rotation={[0.18 + i * 0.11, angle * 0.7, i * 0.37]}
+    scale={scale}
+  >
+    <meshStandardMaterial color={VERMICULITE_COLORS[i % VERMICULITE_COLORS.length]} roughness={0.93} metalness={0.055} />
   </mesh>
 }
 
 function Scene() {
   return <>
-    <ambientLight intensity={1.05} />
-    <directionalLight position={[4, 5, 4]} intensity={2.8} />
-    <directionalLight position={[-4, 1, 2]} intensity={1.35} />
-    <pointLight position={[0, 1.5, 2.5]} intensity={0.65} color="#D8B878" />
-    <Float speed={0.65} rotationIntensity={0.18} floatIntensity={0.2}>
-      <group rotation={[0.2, -0.35, 0]}>{Array.from({ length: 14 }, (_, i) => <Flake key={i} i={i} />)}</group>
+    <ambientLight intensity={0.7} />
+    <directionalLight position={[4, 6, 5]} intensity={2.8} />
+    <directionalLight position={[-4, 1, 3]} intensity={1.2} color="#D4AE70" />
+    <pointLight position={[0, 2, 3]} intensity={0.65} color="#E1C18A" />
+    <Float speed={0.55} rotationIntensity={0.11} floatIntensity={0.14}>
+      <group rotation={[0.22, -0.28, 0]}>
+        {Array.from({ length: 18 }, (_, i) => <Flake key={i} i={i} />)}
+      </group>
     </Float>
-    <OrbitControls enablePan={false} minDistance={3.1} maxDistance={6.5} autoRotate autoRotateSpeed={0.32} />
+    <OrbitControls enablePan={false} minDistance={3.1} maxDistance={6.5} autoRotate autoRotateSpeed={0.24} />
   </>
 }
 
 export default function HeroMaterial() {
-  return <div className="hero-scene" aria-label="Interactive 3D vermiculite flake visualization">
-    <Canvas dpr={[1, 1.35]} camera={{ position: [0, 0.35, 4.2], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
+  return <div className="hero-scene" aria-label="Interactive 3D visualization of natural vermiculite flakes">
+    <Canvas dpr={[1, 1.35]} camera={{ position: [0, 0.3, 4.4], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
       <Scene />
     </Canvas>
-    <div className="hero-art-label"><span>01</span><b>VERMICULITE<br />MATERIAL STUDY</b></div>
+    <div className="hero-art-label"><span>01</span><b>VERMICULITE<br />NATURAL FLAKE STUDY</b></div>
     <div className="hero-art-caption">DRAG · ROTATE · INSPECT</div>
   </div>
 }
