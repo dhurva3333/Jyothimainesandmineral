@@ -1,3 +1,4 @@
+import './v2.module.css'
 import { getSiteContent } from '../lib/site'
 import VermiculiteSceneClient from '../components/VermiculiteSceneClient'
 import MaterialExplorer from '../components/MaterialExplorer'
@@ -38,7 +39,7 @@ export default async function Home() {
       <div className="science-visual" aria-label="Conceptual vermiculite structure visualization"><div className="layer layer-a"/><div className="layer layer-b"/><div className="layer layer-c"/><div className="water-dots">• • • • •</div><span>INTERLAYER WATER</span></div>
     </section>
 
-    <MaterialExplorer applications={applications as any} />
+    <div id="explore"><MaterialExplorer applications={applications as any} /></div>
 
     <section className="applications applications-v2"><div className="section-head"><div><p className="eyebrow">APPLICATION UNIVERSE</p><h2>One mineral.<br/><span>Different jobs.</span></h2></div><p>Explore the documented application areas. A use shown here is not a claim that every Jyothi grade is qualified for that application.</p></div><div className="app-orbit"><div className="orbit-core">VERMICULITE</div>{applications.slice(0, 8).map((app: any, i: number) => <a className={`orbit-node orbit-${i + 1}`} href={`/applications#${app.id}`} key={app.id}><small>{String(i + 1).padStart(2, '0')}</small><strong>{app.title}</strong><span>Explore ↗</span></a>)}</div></section>
 
