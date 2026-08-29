@@ -17,12 +17,10 @@ function Flake({ i, active }: { i: number; active: number }) {
     ref.current.rotation.y += 0.001 + (i % 3) * 0.00035
     ref.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.45 + i) * 0.08
   })
-  return (
-    <mesh ref={ref} position={[Math.cos(a) * radius, Math.sin(i * 1.37) * 0.35, Math.sin(a) * radius]} rotation={[0.15 + i * 0.07, a, i * 0.31]} scale={[scale * (1 + active * 0.015), 0.055, scale * 0.58]}>
-      <sphereGeometry args={[0.72, 14, 8]} />
-      <meshStandardMaterial color={COLORS[(i + active) % COLORS.length]} roughness={0.86} metalness={0.04} />
-    </mesh>
-  )
+  return <mesh ref={ref} position={[Math.cos(a) * radius, Math.sin(i * 1.37) * 0.35, Math.sin(a) * radius]} rotation={[0.15 + i * 0.07, a, i * 0.31]} scale={[scale * (1 + active * 0.015), 0.055, scale * 0.58]}>
+    <sphereGeometry args={[0.72, 14, 8]} />
+    <meshStandardMaterial color={COLORS[(i + active) % COLORS.length]} roughness={0.86} metalness={0.04} />
+  </mesh>
 }
 
 function Scene({ active }: { active: number }) {
@@ -39,10 +37,10 @@ function Scene({ active }: { active: number }) {
 }
 
 export default function ApplicationDetail3D({ active = 0, label }: { active?: number; label: string }) {
-  return <div className="detail-3d" aria-label={`Interactive vermiculite model for ${label}`}>
+  return <div className="three-explainer" aria-label={`Interactive vermiculite model for ${label}`}>
     <Canvas dpr={[1, 1.35]} camera={{ position: [0, 0.2, 4.6], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
       <Scene active={active} />
     </Canvas>
-    <div className="detail-3d-overlay"><span>INTERACTIVE 3D MATERIAL</span><b>{label}</b><small>Drag · rotate · inspect</small></div>
+    <div className="three-caption"><span>INTERACTIVE 3D MATERIAL</span><b>{label}</b><small>Drag · rotate · inspect</small></div>
   </div>
 }
