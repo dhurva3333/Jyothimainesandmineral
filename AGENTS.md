@@ -32,31 +32,48 @@ Teach the visitor in this order:
 ## Frontend rule
 Use `04_AI_Professional_Frontend_Design_Standard.pdf` as the governing frontend design standard. Design hierarchy before decoration. Choose 2D, photography, motion or 3D according to communication value and technical cost. Professional 3D means controlled composition, lighting, depth, motion, interaction and performance — not maximum effects.
 
+## Approved V3 presentation rules
+- Make the first viewport company-specific, fast and understandable.
+- Use real vermiculite macro photography as the visual source of truth for material colour, texture and morphology.
+- Use Three.js/R3F where it improves material understanding, spatial context or application storytelling.
+- Use native scrolling as the baseline; never globally hijack scroll.
+- Use short sticky 3D explanations only where scroll directly controls the explanation, and always provide a clean exit.
+- Applications use one shared Canvas and a side-entering/side-exiting visual hierarchy as the user scrolls.
+- Keep exactly two primary application actions: Full explanation and Sizes & enquire.
+- Detail pages continue the 3D visual language without making every text block animated.
+- The size guide remains one centralized destination.
+- Floating WhatsApp/phone/email controls must never cover important content.
+- Mobile is separately composed rather than being a shrunken desktop.
+- Every WebGL scene needs a fallback and reduced-motion behavior.
+- Expensive 3D and noncritical images must load progressively; never block essential content.
+- Do not literally copy ASUS or other reference-site branding/layouts. Use them for product presentation discipline only.
+
 ## 3D and scroll rules
-- ASUS and other high-quality product websites are references for product presentation discipline, not templates to copy.
-- The first viewport must become understandable quickly.
 - Hero 3D is lightweight.
 - Below-fold 3D is lazy-mounted near the viewport.
 - Application exploration uses one shared Canvas rather than many simultaneous WebGL contexts.
-- Native browser scrolling is the baseline; do not globally hijack scroll.
-- Short sticky scroll-linked 3D stories are allowed when they explain something.
-- Avoid long GSAP ScrollTrigger pin sequences and avoid Lenis unless a measured requirement proves it helps without scroll conflicts.
+- Prefer group-level animation instead of a `useFrame` loop on every mesh.
 - Keep mesh count, bevel/curve complexity, DPR and per-object animation loops controlled.
+- Native browser scrolling is the baseline.
+- Avoid long GSAP ScrollTrigger pin sequences and avoid Lenis unless a measured requirement proves it helps without scroll conflicts.
 - No critical runtime HDR/CDN environment dependency.
 - Every WebGL scene needs a fallback and reduced-motion behavior.
 - Real vermiculite macro photography is evidence and identity; do not replace it with generic 3D blobs.
 
 ## Performance/release safety
-Deployment attempts are scarce. Before committing:
+Deployment attempts are scarce. Before committing or requesting a Vercel deployment:
 1. Verify every import path and referenced file.
 2. Check JSX/TS syntax, especially inline expressions, style objects, template literals and arrays.
-3. Check Vercel configuration for supported fields only.
-4. Verify normal Next.js output expectations; never invent a `public` output directory for a normal Next.js app.
-5. Prefer one atomic coherent commit rather than partial broken commits.
+3. Check all image paths and error fallbacks.
+4. Check Vercel configuration for supported fields only.
+5. Verify normal Next.js output expectations; never invent a `public` output directory for a normal Next.js app.
 6. Run type/build/lint checks where possible.
-7. Inspect the rendered result on mobile and desktop when possible.
-8. Diagnose exact deployment logs before another broad change.
-9. Never claim build/runtime/performance/security verification unless actually performed.
+7. Inspect the exact changed commit and branch before deployment.
+8. Inspect the rendered result on mobile and desktop when possible.
+9. Test reverse scrolling, fast scrolling, reduced motion and WebGL fallback.
+10. Diagnose exact deployment logs before another broad change.
+11. Prefer one atomic coherent commit rather than partial broken commits.
+12. Never claim build/runtime/performance/security verification unless actually performed.
 
 ## Portability
 GitHub, Vercel, domains and Supabase accounts may change. Provider IDs, deployment URLs, generated credentials and secrets must not be hard-coded. Supabase is optional and the public site must have a repository-backed fallback. Never expose a Supabase service-role key in browser code.
