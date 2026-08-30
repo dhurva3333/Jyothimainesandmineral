@@ -2,6 +2,7 @@ import { getSiteContent } from '../lib/site'
 import { applicationDetails } from '../lib/applicationData'
 import VermiculiteExplainer from '../components/VermiculiteExplainer'
 import ApplicationShowcase from '../components/ApplicationShowcase'
+import VermiculiteMacroGallery from '../components/VermiculiteMacroGallery'
 import FloatingContact from '../components/FloatingContact'
 import HeroMaterial from '../components/HeroMaterial'
 import ImmersiveScrollStory from '../components/ImmersiveScrollStory'
@@ -30,6 +31,8 @@ export default async function Home() {
     <section id="vermiculite"><ImmersiveScrollStory /></section>
 
     <section className="transformation-v2"><div className="section-index">04 · UNDERSTAND THE MATERIAL</div><div className="transformation-copy"><p className="kicker">WHAT IS VERMICULITE?</p><h2>A layered mineral with <em>a remarkable structure.</em></h2><p>Vermiculite is a hydrated, laminar silicate mineral related structurally to mica. Its layered structure and interlayer water help explain the distinctive behaviour of exfoliated vermiculite.</p><a className="underlink" href="/vermiculite">Explore the material →</a></div><VermiculiteExplainer /></section>
+
+    <VermiculiteMacroGallery />
 
     <section className="applications-v2-new" id="applications"><div className="applications-heading"><div><p className="kicker">WHERE IT IS USED</p><h2>One material.<br /><span>Many applications.</span></h2></div><p>Choose an application to understand the role vermiculite can play, then view size guidance before contacting Jyothi. No proprietary manufacturing process is disclosed here.</p></div><ApplicationShowcase applications={applicationDetails} /></section>
 
