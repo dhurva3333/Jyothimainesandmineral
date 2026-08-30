@@ -1,33 +1,36 @@
-# Jyothi Mines & Minerals.
+# Jyothi Mines & Minerals — Vermiculite Website
 
-Premium B2B vermiculite website.
+Premium B2B vermiculite website for Jyothi Mines & Minerals, designed around fast product understanding, real material evidence and selective meaningful 3D.
 
-## Production architecture
-- Next.js + React + TypeScript
-- Three.js + React Three Fiber for progressive 3D
-- GSAP for selective motion
-- CSS design system / design tokens
-- Vercel deployment
-- GitHub source of truth
-- Optional Supabase content layer with a complete versioned fallback
-- WhatsApp-first enquiries
-- No CRM, SRM, ERP, inventory dashboard, or admin panel
+## Current frontend direction
+The site uses ASUS and other high-quality product websites as **references for product presentation discipline**: clear hierarchy, strong imagery, concise key information, polished interaction and obvious next actions. It does not copy their branding or proprietary assets.
 
-## Portability / ownership transfer
-Changing GitHub ownership, Vercel project, or Supabase project must require **configuration changes only**, never source-code edits. Provider IDs, database IDs, secrets, generated credentials, and deployment URLs must never be hard-coded into application code.
+The frontend design standard is the governing visual standard. Choose 2D, photography, motion or 3D according to communication value and technical cost.
 
-The application must boot and render without Supabase. If Supabase variables are absent, the site uses the versioned content model in the repository. Use `.env.example` as the configuration contract. Never expose a Supabase service-role key.
+### 3D strategy
+- Lightweight 3D hero for the first impression.
+- Real vermiculite macro photography for material credibility.
+- Lazy-mounted 3D below the fold.
+- One shared 3D application Canvas rather than many simultaneous WebGL contexts.
+- Native browser scrolling; short sticky 3D scroll stories only where they explain material structure.
+- No global scroll hijacking and no long pinning sequences merely for effects.
+- WebGL fallbacks and reduced-motion behavior are required.
+- No critical runtime HDR/CDN environment dependency.
 
-## Content integrity
-Do not invent Jyothi-specific certifications, laboratory specifications, production capacity, customer names, mine ownership, export markets, or application qualifications. General vermiculite science must remain clearly separate from verified company data.
+See `AGENTS.md` and `docs/FRONTEND_V3_RULES.md` before making frontend changes.
 
-The manufacturing route is proprietary and is **not** published as a process diagram or operating recipe.
+## Core content flow
+**What is vermiculite → what makes it useful → what grade matters → where it is used → whether Jyothi can supply the relevant material → contact Jyothi.**
 
-## Security target
-High-hardening production baseline targeting >=9/10 after deployment-specific security testing. A numeric score is not claimed until independently tested. Performance, accessibility, and dependency hygiene are release gates too.
+## Business rules
+- Never invent company specifications, certifications, customer names, production capacity or industrial qualifications.
+- Keep general vermiculite science separate from verified Jyothi data.
+- Do not expose Jyothi's proprietary manufacturing/process route.
+- WhatsApp is the primary commercial conversion path.
+- No CRM, ERP, SRM or internal admin system is required for V1.
 
-## 3D/performance
-3D is progressive enhancement. First meaningful content must render without it. Respect reduced-motion preferences, support weak devices with a lightweight fallback, and avoid blocking the main thread with unnecessary assets.
+## Portability
+GitHub, Vercel, domains and Supabase accounts may change. Provider IDs and secrets must not be hard-coded. Supabase remains optional and the public website must retain a repository-backed fallback.
 
-## Commercial conversion
-WhatsApp is the primary CTA. Set `NEXT_PUBLIC_WHATSAPP_NUMBER` in the deployment environment when the verified company number is available. The code constructs contextual messages; it does not store customer enquiries or require a CRM.
+## Release discipline
+Deployment attempts are scarce. Verify imports, syntax, configuration and build behavior before committing. Prefer one atomic coherent commit. Diagnose exact deployment logs before another broad change.
