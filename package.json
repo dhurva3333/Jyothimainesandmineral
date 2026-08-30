@@ -1,6 +1,6 @@
 {
   "name": "jyothi-mines-minerals",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {"dev":"next dev","build":"next build","start":"next start","lint":"tsc --noEmit"},
   "dependencies": {
@@ -8,6 +8,7 @@
     "@react-three/fiber":"^9.3.0",
     "@supabase/supabase-js":"^2.57.0",
     "gsap":"^3.13.0",
+    "lucide-react":"^1.37.0",
     "next":"^15.5.2",
     "react":"^19.1.1",
     "react-dom":"^19.1.1",
