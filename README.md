@@ -1,4 +1,4 @@
-# Jyothi Mines & Minerals
+# Jyothi Mines & Minerals.
 
 Premium B2B vermiculite website.
 
