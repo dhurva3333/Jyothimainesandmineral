@@ -8,6 +8,7 @@ Portable, tool-independent knowledge graph. GitHub remains the canonical source 
 - `USER_REPORTED_UNVERIFIED` = project information that must not be displayed as an official specification.
 - `EXPERIENCE` = website interaction/design decisions.
 - Never expose proprietary manufacturing/process details in the public experience.
+- Graphify is documentation only and is never a runtime dependency.
 
 ## Core nodes
 | ID | Type | Name | Status |
@@ -39,13 +40,18 @@ Portable, tool-independent knowledge graph. GitHub remains the canonical source 
 ## Experience nodes
 | ID | Type | Name | Status |
 |---|---|---|---|
-| HOME | experience | Concise homepage | EXPERIENCE |
+| HOME | experience | Concise company-first homepage | EXPERIENCE |
+| HERO_3D | interaction | Lightweight hero vermiculite scene | EXPERIENCE |
 | MATERIAL_3D | interaction | Three.js layered vermiculite explainer | EXPERIENCE |
-| APP_3D | interaction | Three.js application visuals | EXPERIENCE |
+| MACRO | evidence | Real vermiculite macro photography | EXPERIENCE |
+| APP_3D | interaction | Shared Three.js application visuals | EXPERIENCE |
+| APP_SLIDE | interaction | Side-entering application choreography | EXPERIENCE |
 | APP_CARD | interaction | Application card | EXPERIENCE |
-| APP_DETAIL | page | Full application explanation | EXPERIENCE |
-| SIZE_GUIDE | page | Application-specific size guidance | EXPERIENCE |
+| APP_DETAIL | page | Full application explanation with 3D | EXPERIENCE |
+| SIZE_GUIDE | page | Centralized size guidance and enquiry | EXPERIENCE |
 | CONTACT_RAIL | conversion | Floating WhatsApp/phone/email icons | EXPERIENCE |
+| REDUCED_MOTION | accessibility | Reduced-motion presentation path | EXPERIENCE |
+| FALLBACK | reliability | Non-WebGL visual fallback | EXPERIENCE |
 
 ## Relationships
 ```text
@@ -72,12 +78,17 @@ JMM_RANGE --MUST_BE_CONFIRMED_BY--> JMM
 JMM --CONVERTS_VIA--> WHATSAPP
 JMM --CONVERTS_VIA--> PHONE
 JMM --CONVERTS_VIA--> EMAIL
-
+HOME --INTRODUCES--> JMM
 HOME --INTRODUCES--> VERM
+HOME --USES--> HERO_3D
 HOME --USES--> MATERIAL_3D
+HOME --USES--> MACRO
 HOME --LEADS_TO--> APP_CARD
+APP_CARD --USES--> APP_3D
 APP_CARD --LINKS_TO--> APP_DETAIL
 APP_CARD --LINKS_TO--> SIZE_GUIDE
+APP_CARD --USES--> APP_SLIDE
+APP_DETAIL --USES--> APP_3D
 APP_DETAIL --EXPLAINS--> APPLICATION_SUITABILITY
 SIZE_GUIDE --EXPLAINS--> GRADE
 SIZE_GUIDE --LEADS_TO--> WHATSAPP
@@ -86,6 +97,12 @@ CONTACT_RAIL --INCLUDES--> PHONE
 CONTACT_RAIL --INCLUDES--> EMAIL
 MATERIAL_3D --VISUALIZES--> VERM
 APP_3D --VISUALIZES--> APPLICATION_CONTEXT
+HERO_3D --REQUIRES--> FALLBACK
+MATERIAL_3D --REQUIRES--> FALLBACK
+APP_3D --REQUIRES--> FALLBACK
+HERO_3D --SUPPORTS--> REDUCED_MOTION
+MATERIAL_3D --SUPPORTS--> REDUCED_MOTION
+APP_3D --SUPPORTS--> REDUCED_MOTION
 MATERIAL_3D --MUST_NOT_REVEAL--> FACTORY_PROCESS_DETAILS
 APP_DETAIL --MUST_NOT_REVEAL--> FACTORY_PROCESS_DETAILS
 ```
@@ -99,5 +116,8 @@ Application size guidance is general/industry guidance unless explicitly marked 
 ## Public-information rule
 The website explains what vermiculite is, why its properties matter, where it is used and how to discuss size selection. It does **not** publish the factory's proprietary process for making/processing vermiculite or application-specific manufacturing instructions.
 
+## Experience rule
+Use ASUS and other high-quality product websites only as references for product hierarchy, photography, concise information, interaction quality and transition discipline. Do not copy their branding or layouts. Prefer real vermiculite imagery for identity and use 3D only where it improves understanding or product/application storytelling.
+
 ## Portability
-Graphify is documentation only. No Vercel, Supabase, GitHub-account or provider IDs belong in the knowledge graph. Replacing accounts must not require rewriting project knowledge.
+GitHub remains the canonical project memory. Vercel, Supabase, Graphify and Obsidian must not become coupled runtime dependencies. Replacing accounts must not require rewriting project knowledge.
