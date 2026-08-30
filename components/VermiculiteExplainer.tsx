@@ -79,7 +79,7 @@ function Scene() {
 
 export default function VermiculiteExplainer() {
   return <div className="three-explainer" aria-label="Interactive three-dimensional model based on vermiculite's natural layered flake morphology">
-    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.2, 5.6], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
+    <Canvas fallback={<div className="three-fallback">3D preview is unavailable on this device.</div>} dpr={[1, 1.5]} camera={{ position: [0, 0.2, 5.6], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
       <Scene />
     </Canvas>
     <div className="three-caption"><span>NATURAL MORPHOLOGY STUDY</span><b>Irregular layered flakes · interlayer water</b><small>Drag to inspect</small></div>

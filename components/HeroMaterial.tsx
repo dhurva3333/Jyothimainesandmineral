@@ -78,7 +78,7 @@ function Scene() {
 
 export default function HeroMaterial() {
   return <div className="hero-scene" aria-label="Interactive 3D visualization of natural vermiculite flakes">
-    <Canvas dpr={[1, 1.35]} camera={{ position: [0, 0.3, 4.4], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
+    <Canvas fallback={<div className="three-fallback">3D preview is unavailable on this device.</div>} dpr={[1, 1.35]} camera={{ position: [0, 0.3, 4.4], fov: 34 }} gl={{ antialias: true, powerPreference: 'default' }}>
       <Scene />
     </Canvas>
     <div className="hero-art-label"><span>01</span><b>VERMICULITE<br />NATURAL FLAKE STUDY</b></div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, Float, OrbitControls } from '@react-three/drei'
+import { Float, OrbitControls } from '@react-three/drei'
 import { useRef, useState } from 'react'
 import * as THREE from 'three'
 import Link from 'next/link'
@@ -45,8 +45,8 @@ export default function ApplicationShowcase({applications}:{applications:Applica
   const [active,setActive]=useState(0); const app=applications[active]
   return <div className="application-showcase">
     <div className="application-stage">
-      <Canvas dpr={[1,1.8]} camera={{position:[0,.15,4.4],fov:34}} gl={{antialias:true,powerPreference:'high-performance'}} onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05}}>
-        <color attach="background" args={['#15100c']}/><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={3.2}/><directionalLight position={[-4,2,1]} intensity={1.5}/><Environment preset="studio"/><ApplicationWorld index={active}/><OrbitControls enableZoom={false} enablePan={false} autoRotate={false}/>
+      <Canvas fallback={<div className="three-fallback">3D preview is unavailable on this device.</div>} dpr={[1,1.8]} camera={{position:[0,.15,4.4],fov:34}} gl={{antialias:true,powerPreference:'high-performance'}} onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05}}>
+        <color attach="background" args={['#15100c']}/><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={3.2}/><directionalLight position={[-4,2,1]} intensity={1.5}/><ApplicationWorld index={active}/><OrbitControls enableZoom={false} enablePan={false} autoRotate={false}/>
       </Canvas>
       <div className="application-stage-label"><span>{String(active+1).padStart(2,'0')}</span><b>{app.eyebrow}</b><strong>{app.title}</strong><small>Interactive material environment · drag to inspect</small></div>
     </div>

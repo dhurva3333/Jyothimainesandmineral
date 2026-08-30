@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, Float } from '@react-three/drei'
+import { Float } from '@react-three/drei'
 import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -91,10 +91,9 @@ export default function ImmersiveScrollStory(){
   const active=progress<.34?0:progress<.68?1:2
   return <section ref={section} className="immersive-story" aria-label="Interactive vermiculite material story">
     <div className="immersive-canvas">
-      <Canvas dpr={[1,2]} camera={{position:[0,.15,4.9],fov:36}} gl={{antialias:true,powerPreference:'high-performance',alpha:false}} onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.08}}>
+      <Canvas fallback={<div className="three-fallback">3D preview is unavailable on this device.</div>} dpr={[1,2]} camera={{position:[0,.15,4.9],fov:36}} gl={{antialias:true,powerPreference:'high-performance',alpha:false}} onCreated={({gl})=>{gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.08}}>
         <color attach="background" args={['#16110d']}/>
         <ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={3.4}/><directionalLight position={[-4,2,2]} intensity={1.8}/>
-        <Environment preset="studio" />
         <Float speed={.45} rotationIntensity={.04} floatIntensity={.08}><MaterialWorld progress={progress}/></Float>
       </Canvas>
       <div className="immersive-vignette"/>
