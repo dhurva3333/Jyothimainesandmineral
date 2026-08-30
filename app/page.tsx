@@ -9,6 +9,7 @@ import ImmersiveScrollStory from '../components/ImmersiveScrollStory'
 import './v2.css'
 import './vermiculite-colors.css'
 import './immersive.css'
+import './immersive-v3.css'
 
 export const revalidate = 3600
 
