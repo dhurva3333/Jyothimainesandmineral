@@ -37,7 +37,7 @@ export default function Home(){
   </header>
 
   <section className="hero">
-   <img className="hero-bg-image" src="/images/hero-ref.svg" alt="" aria-hidden="true"/><div className="hero-overlay"/>
+   <img className="hero-bg-image" src="/images/hero-bg.svg" alt="" aria-hidden="true"/><div className="hero-overlay"/>
    <div className="hero-copy"><p className="eyebrow">PRODDATUR, ANDHRA PRADESH, INDIA</p><h1>Vermiculite.<br/>Material with<br/>Purpose.</h1><p>Exfoliated vermiculite for horticulture, agriculture,<br className="desktop"/> industry, construction and specialised applications.</p><div className="actions"><GoldButton href="#vermiculite">Discover Vermiculite</GoldButton><a className="outline-btn" href="#contact">Talk to Jyothi <MessageCircle size={15}/></a></div></div>
    <div className="contact-rail"><a href="https://wa.me/919963639482" aria-label="WhatsApp"><MessageCircle/><small>WhatsApp</small></a><a href="tel:+919963639482" aria-label="Call"><Phone/><small>Call Us</small></a><a href="mailto:vermiculitejyothi@gmail.com" aria-label="Email"><Mail/><small>Email Us</small></a></div>
   </section>
