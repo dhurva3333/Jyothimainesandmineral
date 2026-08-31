@@ -1,19 +1,7 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { applicationDetails, getApplication } from '../../../lib/applicationData'
-import FloatingContact from '../../../components/FloatingContact'
-import ApplicationDetail3D from '../../../components/ApplicationDetail3D'
-import '../../v2.module.css'
-import '../../immersive.css'
-
-export const dynamicParams = false
-export const revalidate = 3600
-export function generateStaticParams() { return applicationDetails.map((app) => ({ id: app.id })) }
-
-export default async function ApplicationPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params; const app = getApplication(id); if (!app) notFound()
-  const index = applicationDetails.findIndex((item) => item.id === app.id)
-  const message = `Hello Jyothi Mines & Minerals, I am interested in vermiculite for ${app.title}. Please share the suitable available size, specifications, availability and quotation.`
-  const whatsapp = `https://wa.me/919963639482?text=${encodeURIComponent(message)}`
-  return <main className="page application-detail-page"><header className="nav"><Link className="brand" href="/"><span className="mark">J</span><span>JYOTHI <b>MINES & MINERALS</b></span></Link><nav><Link href="/applications">Applications</Link><a className="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Enquire</a></nav></header><section className="page-hero"><p className="eyebrow">{app.eyebrow} / APPLICATION</p><h1>{app.title}</h1><p className="lead">{app.short}</p><p>{app.why}</p><div className="detail-actions"><Link className="button primary" href={`/sizes?application=${app.id}`}>See size guidance →</Link><a className="button ghost" href={whatsapp} target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a></div></section><section className="detail-material-3d"><ApplicationDetail3D active={index} label={app.title} /></section><section className="page-body application-detail-body"><div className="detail-grid"><article className="info-card"><p className="eyebrow">WHY IT FITS</p><h2>Relevant properties</h2><ul>{app.properties.map((item) => <li key={item}>{item}</li>)}</ul></article><article className="info-card"><p className="eyebrow">WHERE IT IS USED</p><h2>Documented / selected uses</h2><ul>{app.uses.map((item) => <li key={item}>{item}</li>)}</ul></article></div><article className="size-callout"><p className="eyebrow">SIZE MATTERS</p><h2>{app.sizeGuidance}</h2><p>{app.sizeBand}</p><Link className="button primary" href={`/sizes?application=${app.id}`}>See size guidance & enquire →</Link></article><article className="qualification-note"><strong>Qualification note</strong><p>{app.qualification}</p></article><div className="detail-actions"><Link className="button ghost" href="/applications">← All applications</Link><a className="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Ask Jyothi about this application ↗</a></div></section><FloatingContact /></main>
-}
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { PageTemplate, EvidencePanel } from '../../../components/site/PageTemplate'
+import { applications } from '../../../lib/content'
+export function generateStaticParams(){return applications.map(a=>({id:a.slug}))}
+export default async function ApplicationPage({params}:{params:Promise<{id:string}>}){const{id}=await params;const app=applications.find(a=>a.slug===id);if(!app)notFound();return <PageTemplate eyebrow="APPLICATION" title={app.name} lead={app.short} dark><section className="section dark application-detail"><div className="application-detail-grid"><div className="application-large-image"><img src={app.image} alt={`${app.name} vermiculite application reference`}/></div><div><EvidencePanel level={app.evidence} text={app.note}/><h2>Potential use cases</h2><ul className="large-list">{app.uses.map(use=><li key={use}>{use}</li>)}</ul><p className="qualification-note">Qualification rule: an industry use for vermiculite is not automatically a qualification for every Jyothi grade. Confirm current product data and test where the application is performance-critical.</p><Link className="gold-button" href="/contact">Discuss this application <ArrowRight size={15}/></Link></div></div></section></PageTemplate>}
