@@ -1,9 +1,9 @@
 'use client'
 
 const images = [
-  { src: 'https://commons.wikimedia.org/wiki/Special:FilePath/VermiculiteUSGOV.jpg', label: 'Vermiculite reference · USGS public domain', note: 'Public-domain reference image from the USGS/Minerals in Your World collection.', credit: 'Wikimedia Commons / USGS public domain' },
-  { src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Vermiculite1.jpg?width=1200', label: 'Exfoliated vermiculite · macro', note: 'Real exfoliated vermiculite showing the characteristic flaky, expanded material form.', credit: 'KENPEI · CC BY-SA' },
-  { src: 'https://commons.wikimedia.org/wiki/Special:FilePath/VermiculiteSF.jpg', label: 'Expanded vermiculite · material view', note: 'Reference photograph of expanded vermiculite for colour and particle-form context.', credit: 'Alexkuzsluda · CC BY-SA' },
+  { src: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/VermiculiteUSGOV.jpg', label: 'Vermiculite reference · USGS public domain', note: 'Public-domain reference image showing real vermiculite morphology.', credit: 'Wikimedia Commons / USGS public domain' },
+  { src: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Vermiculite1.jpg', label: 'Exfoliated vermiculite · macro', note: 'Real exfoliated vermiculite showing the characteristic flaky, expanded material form.', credit: 'KENPEI · CC BY-SA' },
+  { src: 'https://upload.wikimedia.org/wikipedia/commons/4/46/VermiculiteSF.jpg', label: 'Expanded vermiculite · material view', note: 'Reference photograph of expanded vermiculite for colour and particle-form context.', credit: 'Alexkuzsluda · CC BY-SA' },
 ]
 
 export default function VermiculiteMacroGallery() {
