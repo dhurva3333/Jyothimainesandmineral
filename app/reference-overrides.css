@@ -1,0 +1,11 @@
+/* Final visual corrections for the supplied desktop/mobile references. */
+.technical,.about{display:none}
+@media(max-width:720px){
+  .material-art{display:none}
+  .material{height:226px}
+  .size-carousel{overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+  .size-carousel::-webkit-scrollbar{display:none}
+  .size-track{display:flex;width:max-content;gap:7px}
+  .size-card{width:96px;min-width:96px}
+  .cta-copy{background:linear-gradient(90deg,rgba(23,23,22,1) 0%,rgba(23,23,22,.96) 57%,rgba(23,23,22,.58) 100%),url('/images/hero-ref.svg') right center/auto 100% no-repeat}
+}
