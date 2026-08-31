@@ -4,15 +4,15 @@ import { useState } from 'react'
 import { ArrowRight, Menu, X, MessageCircle, Phone, Mail, MapPin, ShieldCheck, Boxes, PackageCheck, Users, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const apps = [
-  { title: 'Horticulture & Nursery', text: 'Improves aeration, water retention and root development.', image: '/images/apps-ref.svg', pos: '0%' },
-  { title: 'Agricultural Inputs', text: 'Enhances soil structure and nutrient efficiency.', image: '/images/apps-ref.svg', pos: '33.33%' },
-  { title: 'Construction & Insulation', text: 'Thermal insulation, fire resistance, lightweight.', image: '/images/apps-ref.svg', pos: '66.66%' },
-  { title: 'Industrial Applications', text: 'Used in foundry, filtration, coatings and more.', image: '/images/apps-ref.svg', pos: '100%' },
+  { title: 'Horticulture & Nursery', text: 'Improves aeration, water retention and root development.', image: '/images/apps-ref.svg', shift: 0 },
+  { title: 'Agricultural Inputs', text: 'Enhances soil structure and nutrient efficiency.', image: '/images/apps-ref.svg', shift: 1 },
+  { title: 'Construction & Insulation', text: 'Thermal insulation, fire resistance, lightweight.', image: '/images/apps-ref.svg', shift: 2 },
+  { title: 'Industrial Applications', text: 'Used in foundry, filtration, coatings and more.', image: '/images/apps-ref.svg', shift: 3 },
 ]
 const sizes = [
-  { title: 'Fine', range: '0.5 – 1 mm', pos: '0%' },
-  { title: 'Medium', range: '1 – 2.5 mm', pos: '50%' },
-  { title: 'Coarse', range: '2.5 – 5 mm', pos: '100%' },
+  { title: 'Fine', range: '0.5 – 1 mm', shift: 0 },
+  { title: 'Medium', range: '1 – 2.5 mm', shift: 1 },
+  { title: 'Coarse', range: '2.5 – 5 mm', shift: 2 },
 ]
 const trustItems = [
   ['Quality Assured','Carefully processed',<ShieldCheck key="quality"/>],
@@ -28,7 +28,6 @@ export default function Home(){
  const [menu,setMenu]=useState(false)
  const [app,setApp]=useState(0)
  const [size,setSize]=useState(0)
- const go=(id:string)=>{setMenu(false); document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}
  return <main id="home">
   <header className="nav">
    <Logo/>
@@ -52,12 +51,12 @@ export default function Home(){
 
   <section className="applications section-dark" id="applications">
    <div className="app-copy"><p className="eyebrow">APPLICATIONS</p><h2>One Mineral.<br/>Many Possibilities.</h2><p>From growing plants to industrial processes, vermiculite adapts to your needs.</p><GoldButton href="#contact">View All Applications</GoldButton></div>
-   <div className="app-carousel"><button className="carousel-arrow left" onClick={()=>setApp((app+apps.length-1)%apps.length)} aria-label="Previous"><ChevronLeft/></button><div className="app-track">{apps.map((item,i)=><article className={`app-card ${i===app?'selected':''}`} key={item.title} onClick={()=>setApp(i)}><div className="app-photo"><img src={item.image} alt="" style={{objectPosition:item.pos}}/></div><div className="app-card-copy"><h3>{item.title}</h3><p>{item.text}</p><span><ArrowRight size={11}/></span></div></article>)}</div><button className="carousel-arrow right" onClick={()=>setApp((app+1)%apps.length)} aria-label="Next"><ChevronRight/></button><div className="dots">{apps.map((_,i)=><button key={i} className={i===app?'on':''} onClick={()=>setApp(i)} aria-label={`Application ${i+1}`}/>)}</div></div>
+   <div className="app-carousel"><button className="carousel-arrow left" onClick={()=>setApp((app+apps.length-1)%apps.length)} aria-label="Previous"><ChevronLeft/></button><div className="app-track">{apps.map((item,i)=><article className={`app-card ${i===app?'selected':''}`} key={item.title} onClick={()=>setApp(i)}><div className="app-photo"><img src={item.image} alt="" style={{transform:`translateX(-${item.shift*25}%)`}}/></div><div className="app-card-copy"><h3>{item.title}</h3><p>{item.text}</p><span><ArrowRight size={11}/></span></div></article>)}</div><button className="carousel-arrow right" onClick={()=>setApp((app+1)%apps.length)} aria-label="Next"><ChevronRight/></button><div className="dots">{apps.map((_,i)=><button key={i} className={i===app?'on':''} onClick={()=>setApp(i)} aria-label={`Application ${i+1}`}/>)}</div></div>
   </section>
 
   <section className="sizes section-light" id="sizes">
    <div className="size-copy"><p className="eyebrow dark">SIZE SELECTION</p><h2>Right Size.<br/>Right Application.</h2><p>Different sizes fit different needs.<br/>Select the size that fits your application.</p><a className="black-btn" href="#contact">Explore Sizes &amp; Enquire <ArrowRight size={14}/></a></div>
-   <div className="size-carousel"><div className="size-track">{sizes.map((item,i)=><article className={`size-card ${i===size?'selected':''}`} key={item.title} onClick={()=>setSize(i)}><div className="size-photo"><img src="/images/sizes-ref.svg" alt="" style={{objectPosition:item.pos}}/></div><h3>{item.title}</h3><p>{item.range}</p></article>)}</div><button className="size-arrow" aria-label="Next size" onClick={()=>setSize((size+1)%sizes.length)}><ChevronRight/></button></div>
+   <div className="size-carousel"><div className="size-track">{sizes.map((item,i)=><article className={`size-card ${i===size?'selected':''}`} key={item.title} onClick={()=>setSize(i)}><div className="size-photo"><img src="/images/sizes-ref.svg" alt="" style={{transform:`translateX(-${item.shift*33.3333}%)`}}/></div><h3>{item.title}</h3><p>{item.range}</p></article>)}</div><button className="size-arrow" aria-label="Next size" onClick={()=>setSize((size+1)%sizes.length)}><ChevronRight/></button></div>
   </section>
 
   <section className="technical section-dark" id="technical"><div><p className="eyebrow">TECHNICAL MATERIAL</p><h2>Processed for<br/>Consistent Performance.</h2><p>Controlled crushing, grading, screening, magnetic separation, drying and thermal expansion help us supply dependable exfoliated vermiculite.</p></div><div className="spec-grid"><div><b>0.5–5 mm</b><span>Available grading range</span></div><div><b>8–20×</b><span>Typical expansion range</span></div><div><b>Low Density</b><span>High volume material</span></div><div><b>Stable</b><span>Inert mineral structure</span></div></div></section>
