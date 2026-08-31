@@ -1,43 +1,46 @@
-/* Pixel-reference responsive composition: reference screenshots are targets for layout, not images to display as the page. */
-
+/* Pixel-reference responsive composition: screenshots define geometry; assets remain inside real HTML/UI. */
 .hero,.trust,.material,.applications,.sizes,.technical,.about,.cta,.footer{width:100%;max-width:none;position:relative}
 .hero{background:#090908}.trust{background:#1a1a18}.material,.sizes,.about{background:var(--cream)}.applications,.technical,.cta,.footer{background:#171716}
+.hero-bg-image{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;object-fit:cover;object-position:center;filter:saturate(.9) contrast(1.03)}
+.hero-overlay{z-index:1}.hero-copy,.contact-rail{z-index:2}.nav{z-index:20}
 .hero-art,.cta-art{pointer-events:none}.material-photo,.app-photo,.size-photo{isolation:isolate}
 
+/* Desktop: the first viewport is Hero + Trust. Each following primary band owns a full viewport. */
 @media (min-width:721px){
  html{scroll-snap-type:y proximity}
  .hero{height:calc(100svh - 60px);scroll-snap-align:start}
  .trust{height:60px;scroll-snap-align:none}
  .material,.applications,.sizes,.cta{height:100svh;min-height:100svh;scroll-snap-align:start}
+ .hero-bg-image{object-position:center center}
 }
 
 @media (max-width:720px){
  body{background:var(--cream)}main{width:100%;min-width:0}
  html{scroll-snap-type:y mandatory;scroll-padding-top:0}
- /* Screen 01: hero + trust together fill the mobile viewport. */
+ /* Screen 01 = hero + trust, exactly one mobile viewport. */
  .hero{height:75svh;min-height:0;scroll-snap-align:start}
  .trust{height:25svh;min-height:0;scroll-snap-align:none}
- /* Screens 02–05: every primary band is a complete viewport. */
+ /* Screens 02–05 are independent full-screen website sections. */
  .material,.applications,.sizes,.cta{width:100%;height:100svh;min-height:100svh;margin:0;scroll-snap-align:start;scroll-snap-stop:always}
  .hero,.trust,.applications,.cta{background:#171716}.material,.sizes{background:var(--cream)}
 
- /* HERO */
- .hero-art{background-position:62% center;background-size:cover}
- .hero-overlay{background:linear-gradient(90deg,rgba(0,0,0,.86),rgba(0,0,0,.18) 72%,rgba(0,0,0,.28))}
+ /* Hero visual is a real image layer; text, buttons and contacts are HTML UI above it. */
+ .hero-bg-image{object-position:68% center;object-fit:cover}
+ .hero-overlay{background:linear-gradient(90deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.24) 72%,rgba(0,0,0,.35) 100%)}
  .hero-copy{padding:29svh 20px 0;width:100%}
  .hero h1{font-size:clamp(31px,7vw,48px);line-height:.98;margin-bottom:17px}
  .hero .eyebrow{font-size:7px;margin-bottom:13px}
  .hero-copy>p:not(.eyebrow){display:none}
  .actions .gold-btn{font-size:9px;padding:13px 17px;min-width:184px;height:48px}
- .actions .outline-btn{display:none}.contact-rail{display:none}
+ .actions .outline-btn{display:none}
+ /* Keep the mobile reference clean; contact rail is replaced by the real CTA/footer links. */
+ .contact-rail{display:none}
 
- /* TRUST STRIP */
  .trust{padding:0 20px;grid-template-columns:repeat(4,1fr);align-items:center}
  .trust-item{height:58%;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:center;border-right:1px solid #55534d;padding:0 4px}
  .trust-item svg{width:21px;height:21px;stroke-width:1.25}.trust-item span{display:block}
  .trust-item b{font-size:8px;line-height:1.15;white-space:normal}.trust-item small{font-size:6px;line-height:1.25;margin-top:4px}
 
- /* MATERIAL — real UI, not a flattened screenshot */
  .material{display:flex;align-items:flex-start;padding:15vh 20px 10vh}
  .material-copy{max-width:360px;width:100%}
  .material-copy h2{font-size:clamp(25px,6vw,38px);line-height:1.03;margin-bottom:18px}
@@ -45,7 +48,6 @@
  .material-copy .black-btn{font-size:9px;padding:13px 17px;min-height:47px}
  .material-art{display:none}
 
- /* APPLICATIONS — black screen, real interactive carousel */
  .applications{display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:9vh 20px 7vh}
  .app-copy{padding:0;flex:none}.app-copy h2{font-size:clamp(27px,7vw,42px);line-height:1.03;margin-bottom:16px}
  .app-copy>p:not(.eyebrow){font-size:9px;line-height:1.55;max-width:290px;margin-bottom:20px}
@@ -57,7 +59,6 @@
  .carousel-arrow{top:50%;width:30px;height:30px;transform:translateY(-50%)}.carousel-arrow.left{left:-2px}.carousel-arrow.right{right:-2px}
  .dots{bottom:-20px;gap:7px}.dots button{width:6px;height:6px}
 
- /* SIZES — cream screen, cards are real horizontally scrollable UI */
  .sizes{display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:9vh 20px}
  .size-copy{padding:0;flex:none}.size-copy h2{font-size:clamp(27px,7vw,42px);line-height:1.03;margin-bottom:14px}
  .size-copy>p:not(.eyebrow){font-size:9px;line-height:1.55;margin-bottom:18px}.size-copy .black-btn{font-size:9px;padding:13px 17px;min-height:45px}
@@ -65,7 +66,6 @@
  .size-track{display:flex;width:max-content;height:100%;gap:10px}.size-card{width:155px;min-width:155px;height:100%;border-radius:8px}
  .size-photo{height:68%}.size-photo img{height:100%;width:300%;object-fit:cover}.size-card h3{font-size:10px;margin-top:6px}.size-card p{font-size:8px}.size-arrow{display:none}
 
- /* CTA — full black viewport; footer follows as normal website content */
  .cta{height:100svh;min-height:100svh;display:flex;flex-direction:column}.cta-art{height:43%;flex:none;background-position:center;background-size:cover}
  .cta-copy{flex:1;padding:8vh 20px;background:#171716}.cta-copy h2{font-size:clamp(28px,7vw,42px);line-height:1.03;margin-bottom:13px}
  .cta-copy>p:not(.eyebrow){font-size:9px;line-height:1.55;margin-bottom:20px}.cta-copy .gold-btn,.cta-copy .outline-btn{min-height:45px;font-size:9px}
