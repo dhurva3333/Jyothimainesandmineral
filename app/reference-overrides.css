@@ -1,11 +1,94 @@
-/* Final visual corrections for the supplied desktop/mobile references. */
-.technical,.about{display:none}
-@media(max-width:720px){
-  .material-art{display:none}
-  .material{height:226px}
-  .size-carousel{overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
-  .size-carousel::-webkit-scrollbar{display:none}
-  .size-track{display:flex;width:max-content;gap:7px}
-  .size-card{width:96px;min-width:96px}
-  .cta-copy{background:linear-gradient(90deg,rgba(23,23,22,1) 0%,rgba(23,23,22,.96) 57%,rgba(23,23,22,.58) 100%),url('/images/hero-ref.svg') right center/auto 100% no-repeat}
+/* Reference-driven layout corrections. These rules keep each visual band as a real full-width website section. */
+
+/* Every major band owns its full viewport width; content remains constrained inside the section. */
+.hero,
+.trust,
+.material,
+.applications,
+.sizes,
+.technical,
+.about,
+.cta,
+.footer {
+  width: 100%;
+  max-width: none;
+  position: relative;
+}
+
+/* Make the alternating reference rhythm explicit: black -> white -> black -> white -> black. */
+.hero { background: #090908; }
+.trust { background: #1a1a18; }
+.material,
+.sizes,
+.about { background: var(--cream); }
+.applications,
+.technical,
+.cta,
+.footer { background: #171716; }
+
+/* Prevent an image/card from becoming the section itself. */
+.hero-art,
+.cta-art { pointer-events: none; }
+
+/* The visual should sit inside the layout, while text/UI remains real HTML. */
+.material-photo,
+.app-photo,
+.size-photo { isolation: isolate; }
+
+/* Mobile: preserve the clean full-width black/white bands from the supplied reference. */
+@media (max-width: 720px) {
+  body { background: var(--cream); }
+  main { width: 100%; min-width: 0; }
+
+  .hero,
+  .trust,
+  .material,
+  .applications,
+  .sizes,
+  .cta,
+  .footer {
+    width: 100%;
+    margin: 0;
+  }
+
+  .hero,
+  .trust,
+  .applications,
+  .cta,
+  .footer { background: #171716; }
+
+  .material,
+  .sizes { background: var(--cream); }
+
+  /* Keep the material section visibly white/cream from edge to edge. */
+  .material { box-shadow: inset 0 1px rgba(0,0,0,.02); }
+
+  /* Keep application content/cards inside the black band rather than letting a card define it. */
+  .applications { overflow: hidden; }
+  .app-carousel { width: 100%; }
+
+  /* The supplied mobile reference shows no large material photograph in this band. */
+  .material-art { display: none; }
+  .material { height: 226px; }
+
+  /* Size cards scroll inside the white band; the band itself stays full-width. */
+  .size-carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  .size-carousel::-webkit-scrollbar { display: none; }
+  .size-track {
+    display: flex;
+    width: max-content;
+    gap: 7px;
+  }
+  .size-card {
+    width: 96px;
+    min-width: 96px;
+  }
+
+  .cta-copy {
+    background: linear-gradient(90deg, rgba(23,23,22,1) 0%, rgba(23,23,22,.96) 57%, rgba(23,23,22,.58) 100%), url('/images/hero-ref.svg') right center/auto 100% no-repeat;
+  }
 }
