@@ -1,14 +1,6 @@
-import './globals.css'
-import './reference-overrides.css'
 import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Jyothi Mines & Minerals | Vermiculite',
-  description: 'Exfoliated vermiculite from Proddatur, Andhra Pradesh for horticulture, agriculture, industry and construction.',
-  robots: { index: true, follow: true },
-  openGraph: { title: 'Jyothi Mines & Minerals', description: 'Vermiculite. Material with Purpose.', type: 'website' }
-}
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>
-}
+import './globals.css'
+import './v3.css'
+export const metadata:Metadata={metadataBase:new URL(process.env.NEXT_PUBLIC_SITE_URL||'https://jyothiminesandminerals.com'),title:{default:'Jyothi Vermiculite | Material with Purpose',template:'%s | Jyothi Vermiculite'},description:'Explore Jyothi Vermiculite: material science, product grades, applications, technical information and evidence-backed research from Proddatur, Andhra Pradesh.',robots:{index:true,follow:true},openGraph:{title:'Jyothi Vermiculite | Material with Purpose',description:'A technical product and knowledge platform for vermiculite.',type:'website',images:['/images/hero-bg.svg']}}
+const jsonLd={'@context':'https://schema.org','@type':'Organization',name:'Jyothi Mines & Minerals',url:'https://jyothiminesandminerals.com',email:'vermiculitejyothi@gmail.com',telephone:'+91 9963639482',address:{'@type':'PostalAddress',addressLocality:'Proddatur',addressRegion:'Andhra Pradesh',addressCountry:'IN'}}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/></body></html>}
