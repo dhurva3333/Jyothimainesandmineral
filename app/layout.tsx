@@ -1,14 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import SmoothScroll from '../components/SmoothScroll'
 
 export const metadata: Metadata = {
   title: 'Jyothi Mines & Minerals | Vermiculite',
-  description: 'Application-led vermiculite information and B2B supply from Jyothi Mines & Minerals.',
+  description: 'Exfoliated vermiculite from Proddatur, Andhra Pradesh for horticulture, agriculture, industry and construction.',
   robots: { index: true, follow: true },
-  openGraph: { title: 'Jyothi Mines & Minerals', description: 'Vermiculite, explained clearly and supplied application-first.', type: 'website' }
+  openGraph: { title: 'Jyothi Mines & Minerals', description: 'Vermiculite. Material with Purpose.', type: 'website' }
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><SmoothScroll />{children}</body></html>
+  return <html lang="en"><body>{children}</body></html>
 }
