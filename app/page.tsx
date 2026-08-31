@@ -10,6 +10,7 @@ import './v2.css'
 import './vermiculite-colors.css'
 import './immersive.css'
 import './immersive-v3.css'
+import './mockup.css'
 
 export const revalidate = 3600
 
