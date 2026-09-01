@@ -1,6 +1,7 @@
 'use client'
 
 import { CSSProperties, useMemo, useState } from 'react'
+import Link from 'next/link'
 
 type Application = {
   id: string
@@ -29,7 +30,7 @@ export default function MaterialExplorer({ applications = [] }: { applications?:
       <div className="explorer-intro">
         <p className="eyebrow">CHOOSE A NEED</p>
         <h2>Start with the<br /><em>job.</em></h2>
-        <p>Don't know the grade yet? Start with the application. The website will explain the relevant material properties before asking for a technical enquiry.</p>
+        <p>Do not know the grade yet? Start with the application. The website will explain the relevant material properties before asking for a technical enquiry.</p>
       </div>
       <div className="explorer-panel">
         <div className="mode-grid">
@@ -48,7 +49,7 @@ export default function MaterialExplorer({ applications = [] }: { applications?:
             <p className="eyebrow">WHY IT MATTERS</p>
             <h3>{active.property}</h3>
             <p>{active.detail}</p>
-            <a className="text-link" href={`/applications#${active.id}`}>Explore this application →</a>
+            <Link className="text-link" href={`/applications#${active.id}`}>Explore this application →</Link>
           </div>
         </div>
         <div className="lab-control">
@@ -60,7 +61,7 @@ export default function MaterialExplorer({ applications = [] }: { applications?:
           <small>This is a visual explainer, not a Jyothi product specification.</small>
         </div>
       </div>
-      {nearestApps.length > 0 && <div className="explorer-links">{nearestApps.map((app) => <a href={`/applications#${app.id}`} key={app.id}>{app.title}<span>↗</span></a>)}</div>}
+      {nearestApps.length > 0 && <div className="explorer-links">{nearestApps.map((app) => <Link href={`/applications#${app.id}`} key={app.id}>{app.title}<span>↗</span></Link>)}</div>}
     </section>
   )
 }
