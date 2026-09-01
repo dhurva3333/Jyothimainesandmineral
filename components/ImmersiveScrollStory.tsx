@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react'
 import * as THREE from 'three'
 
 const chapters = [
@@ -95,14 +95,26 @@ function useNearViewport(ref: RefObject<HTMLElement | null>) {
   return near
 }
 
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const onChange = () => onStoreChange()
+      mediaQuery.addEventListener('change', onChange)
+      return () => mediaQuery.removeEventListener('change', onChange)
+    },
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    () => false,
+  )
+}
+
 export default function ImmersiveScrollStory() {
   const section = useRef<HTMLElement>(null)
   const [progress, setProgress] = useState(0)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const reducedMotion = usePrefersReducedMotion()
   const near = useNearViewport(section)
 
   useEffect(() => {
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
     const el = section.current
     if (!el) return
     let raf = 0
