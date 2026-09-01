@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useRef, useState, type RefObject } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react'
 import * as THREE from 'three'
 import Link from 'next/link'
 import type { ApplicationDetail } from '../lib/applicationData'
@@ -62,15 +62,24 @@ function useNearViewport(ref: RefObject<HTMLElement | null>) {
   return near
 }
 
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const onChange = () => onStoreChange()
+      mediaQuery.addEventListener('change', onChange)
+      return () => mediaQuery.removeEventListener('change', onChange)
+    },
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    () => false,
+  )
+}
+
 export default function ApplicationShowcase({ applications }: { applications: ApplicationDetail[] }) {
   const [active, setActive] = useState(0)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const reducedMotion = usePrefersReducedMotion()
   const stage = useRef<HTMLDivElement>(null)
   const near = useNearViewport(stage)
-
-  useEffect(() => {
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  }, [])
 
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-application-card]'))
