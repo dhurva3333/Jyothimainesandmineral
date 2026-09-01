@@ -1,7 +1,8 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react'
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from 'react'
+import Link from 'next/link'
 import * as THREE from 'three'
 
 const chapters = [
@@ -11,6 +12,21 @@ const chapters = [
 ]
 
 const palette = ['#4b3525', '#64462d', '#7d5836', '#987047', '#b18757', '#c6a878', '#d4bc91']
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)'
+
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const media = window.matchMedia(reducedMotionQuery)
+  media.addEventListener('change', onStoreChange)
+  return () => media.removeEventListener('change', onStoreChange)
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(reducedMotionQuery).matches
+}
+
+function getReducedMotionServerSnapshot() {
+  return false
+}
 
 function makeFlake(seed: number, scale = 1) {
   const shape = new THREE.Shape()
@@ -86,12 +102,8 @@ function useScrollProgress(ref: RefObject<HTMLElement | null>) {
 export default function MaterialScrollStory() {
   const section = useRef<HTMLElement>(null)
   const progress = useScrollProgress(section)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot)
   const active = progress < 0.34 ? 0 : progress < 0.68 ? 1 : 2
-
-  useEffect(() => {
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  }, [])
 
   return <section ref={section} className="material-scroll-story" id="vermiculite" aria-label="Vermiculite interactive material explanation">
     <div className="material-scroll-sticky">
@@ -111,7 +123,7 @@ export default function MaterialScrollStory() {
           <p>{chapter.eyebrow}</p>
           <h2>{chapter.title}</h2>
           <span>{chapter.text}</span>
-          {index === 0 && <a className="dark-button" href="/vermiculite">Explore the Material <b>→</b></a>}
+          {index === 0 && <Link className="dark-button" href="/vermiculite">Explore the Material <b>→</b></Link>}
         </article>)}
       </div>
       <div className="material-scroll-label">SCROLL TO EXPLORE <span>↓</span></div>
