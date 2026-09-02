@@ -1,2 +1,3 @@
-import { defineConfig } from 'vitest/config'
-export default defineConfig({test:{environment:'node',include:['tests/**/*.test.ts']}})
+import { defineConfig } from "vitest/config";
+import path from "path";
+export default defineConfig({test:{environment:"node",exclude:["node_modules/**","tests/e2e/**"]},resolve:{alias:{"@":path.resolve(__dirname,".")}}});

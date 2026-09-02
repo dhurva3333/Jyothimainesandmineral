@@ -1,0 +1,3 @@
+import { describe, it, expect } from "vitest";
+import { classifyEvidence, isNonAuthoritative } from "@/lib/validation/evidence";
+describe("evidence classification",()=>{it("labels verified Jyothi data as strong tone",()=>{expect(classifyEvidence("verified_jyothi").tone).toBe("strong")});it("labels proposed targets as non-authoritative",()=>{expect(isNonAuthoritative("proposed")).toBe(true)});it("labels generic reference values as non-authoritative",()=>{expect(isNonAuthoritative("generic_reference")).toBe(true)});it("never treats verified Jyothi data as non-authoritative",()=>{expect(isNonAuthoritative("verified_jyothi")).toBe(false)});it("treats contradicted evidence as unverified tone",()=>{expect(classifyEvidence("contradicted").tone).toBe("unverified")})});

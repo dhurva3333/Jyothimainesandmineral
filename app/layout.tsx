@@ -1,6 +1,29 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import './v3.css'
-export const metadata:Metadata={metadataBase:new URL(process.env.NEXT_PUBLIC_SITE_URL||'https://jyothiminesandminerals.com'),title:{default:'Jyothi Vermiculite | Material with Purpose',template:'%s | Jyothi Vermiculite'},description:'Explore Jyothi Vermiculite: material science, product grades, applications, technical information and evidence-backed research from Proddatur, Andhra Pradesh.',robots:{index:true,follow:true},openGraph:{title:'Jyothi Vermiculite | Material with Purpose',description:'A technical product and knowledge platform for vermiculite.',type:'website',images:['/images/hero-bg.svg']}}
-const jsonLd={'@context':'https://schema.org','@type':'Organization',name:'Jyothi Mines & Minerals',url:'https://jyothiminesandminerals.com',email:'vermiculitejyothi@gmail.com',telephone:'+91 9963639482',address:{'@type':'PostalAddress',addressLocality:'Proddatur',addressRegion:'Andhra Pradesh',addressCountry:'IN'}}
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/></body></html>}
+import type { Metadata } from "next";
+import { Fraunces, Inter, Noto_Sans_Telugu } from "next/font/google";
+import "./globals.css";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
+
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const notoTelugu = Noto_Sans_Telugu({ subsets: ["telugu"], variable: "--font-noto-telugu", display: "swap" });
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://www.jyothivermiculite.com"),
+  title: { default: "Jyothi Mines & Minerals — Exfoliated Vermiculite", template: "%s | Jyothi Mines & Minerals" },
+  description: "Exfoliated vermiculite from Proddatur, Andhra Pradesh, India, for horticulture, agriculture, construction, industrial and specialised applications.",
+  openGraph: { type: "website", siteName: "Jyothi Mines & Minerals", locale: "en_IN" },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${notoTelugu.variable}`}>
+      <body>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-3 focus:rounded focus:bg-gold focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
+        <Navbar />
+        <main id="main-content">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}

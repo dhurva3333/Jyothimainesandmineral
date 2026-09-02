@@ -1,0 +1,13 @@
+export type EvidenceLevel="verified_jyothi"|"strong_evidence"|"moderate_evidence"|"manufacturer_claim"|"historical"|"generic_reference"|"proposed"|"unverified"|"contradicted";
+export interface EvidenceMeta{level:EvidenceLevel;sourceId?:string;sourceLabel?:string;sourceDate?:string;notes?:string}
+export type ApplicationSlug="horticulture"|"agriculture"|"construction"|"industrial"|"insulation"|"other";
+export interface Application{id:string;slug:ApplicationSlug;name:string;summary:string;description:string;examples:string[];evidence:EvidenceMeta}
+export type ParticleGrade="fine"|"medium"|"coarse";
+export interface ProductGrade{id:string;slug:string;name:string;grade:ParticleGrade;particleSizeMm:{min:number;max:number};particleSizeEvidence:EvidenceMeta;targetApplications:ApplicationSlug[];description:string}
+export interface TechnicalProperty{id:string;name:string;genericValue:string;jyothiValue:string|null;unit?:string;evidence:EvidenceMeta}
+export interface Product{id:string;slug:string;name:string;shortDescription:string;grades:ProductGrade[];packaging:string[];storageNotes:string;safetyNotes:string;coaAvailable:boolean}
+export interface ResearchSource{id:string;title:string;author?:string;publication?:string;year?:number;url?:string;sourceType:"peer_reviewed"|"standards_body"|"trade_publication"|"manufacturer"|"government"|"other"}
+export interface ResearchClaim{id:string;claim:string;applicationSlug:ApplicationSlug|null;evidence:EvidenceMeta;isJyothiSpecific:boolean;isHistorical:boolean;isVerified:boolean}
+export interface ComparisonMaterial{id:string;name:string;parameters:Record<string,{value:string;evidence:EvidenceMeta}|undefined>}
+export interface ContactSubmission{name:string;email:string;phone?:string;company?:string;application:ApplicationSlug|"unspecified";message:string}
+export interface DataProvenance{source:"supabase"|"local_demo"}

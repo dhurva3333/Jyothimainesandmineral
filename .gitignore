@@ -1,9 +1,9 @@
-node_modules/
-.next/
-out/
+node_modules
+.next
 .env
 .env.local
-.env.*.local
-.vercel/
-*.log
+out
+coverage
+playwright-report
+test-results
 .DS_Store

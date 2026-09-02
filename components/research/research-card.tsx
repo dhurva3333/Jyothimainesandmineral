@@ -1,0 +1,3 @@
+import type { ResearchClaim } from "@/types/domain";
+import { EvidenceBadge } from "@/components/ui/evidence-badge";
+export function ResearchCard({claim}:{claim:ResearchClaim}){return <div className="border-b border-cream-line py-5 last:border-0"><p className="text-[15px] text-text-light">{claim.claim}</p><div className="mt-3 flex flex-wrap items-center gap-2"><EvidenceBadge level={claim.evidence.level}/>{claim.isJyothiSpecific&&<span className="rounded-full bg-gold/10 px-2.5 py-1 text-[11px] text-gold-dim">Jyothi-specific</span>}{claim.isHistorical&&<span className="rounded-full bg-text-light-mute/10 px-2.5 py-1 text-[11px] text-text-light-mute">Historical</span>}</div></div>}
