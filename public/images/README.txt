@@ -1,1 +1,0 @@
-Reference composite assets are embedded as SVG files so the frontend can use the supplied visual references without relying on the old image implementation.
