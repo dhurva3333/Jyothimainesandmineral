@@ -1,6 +1,7 @@
 import Link from "next/link";
+import type { Route } from "next";
 
-const quickLinks: [string, string][] = [
+const quickLinks: [Route, string][] = [
   ["/", "Home"],
   ["/products/vermiculite", "Vermiculite"],
   ["/applications", "Applications"],
@@ -9,7 +10,7 @@ const quickLinks: [string, string][] = [
   ["/contact", "Contact"],
 ];
 
-const applicationLinks: [string, string][] = [
+const applicationLinks: [Route, string][] = [
   ["/applications/horticulture", "Horticulture & Nursery"],
   ["/applications/agriculture", "Agricultural Inputs"],
   ["/applications/construction", "Construction & Insulation"],
@@ -48,7 +49,7 @@ export function Footer() {
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: [string, string][] }) {
+function FooterCol({ title, links }: { title: string; links: [Route, string][] }) {
   return (
     <div>
       <h5 className="mb-4 text-[13px] tracking-wide text-gold-dim">{title}</h5>
