@@ -5,6 +5,77 @@ import { SpecificationTable } from "@/components/technical/specification-table";
 import { CoaBadge } from "@/components/product/coa-badge";
 import { DemoDataNotice } from "@/components/ui/demo-data-notice";
 import { ParticleSizeVisualizerLoader } from "@/components/3d/particle-size-visualizer-loader";
+import { BreadcrumbJsonLd, JsonLd, SITE_URL } from "@/components/seo/structured-data";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const { slug } = await params; const { data: product } = await getProductBySlug(slug); if (!product) return {}; return { title: product.name, description: product.shortDescription }; }
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const [{ data: product, provenance }, { data: properties }] = await Promise.all([getProductBySlug(slug), getTechnicalProperties()]); if (!product) notFound(); return <article className="bg-cream px-5 py-20 text-text-light sm:px-8"><div className="mx-auto max-w-[1240px]"><p className="mb-3 text-[13px] tracking-[0.08em] text-gold-dim">PRODUCT</p><h1 className="font-display text-[clamp(32px,5vw,52px)] font-normal">{product.name}</h1><p className="mt-4 max-w-[60ch] text-[17px] text-text-light-mute">{product.shortDescription}</p><div className="mt-4"><CoaBadge available={product.coaAvailable} /></div><div className="mt-14 grid gap-10 lg:grid-cols-3">{product.grades.map((grade)=><div key={grade.id} className="rounded-sm border border-cream-line bg-white p-6"><ParticleSizeVisualizerLoader grade={grade.grade}/><h3 className="mt-5 font-display text-xl">{grade.name}</h3><p className="text-sm text-gold-dim">{grade.particleSizeMm.min}–{grade.particleSizeMm.max} mm</p><p className="mt-2 text-sm text-text-light-mute">{grade.description}</p></div>)}</div><section className="mt-16"><h2 className="font-display text-2xl">Technical Properties</h2><div className="mt-6"><SpecificationTable properties={properties}/></div></section><div className="mt-10 grid gap-10 sm:grid-cols-2"><div><h3 className="font-display text-lg">Storage</h3><p className="mt-2 text-sm text-text-light-mute">{product.storageNotes}</p></div><div><h3 className="font-display text-lg">Safety</h3><p className="mt-2 text-sm text-text-light-mute">{product.safetyNotes}</p></div></div>{provenance === "local_demo" && <DemoDataNotice className="mt-10"/>}</div></article>; }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const { data: product } = await getProductBySlug(slug);
+  if (!product) return {};
+  const canonical = `${SITE_URL}/products/${slug}`;
+  return {
+    title: product.name,
+    description: product.shortDescription,
+    alternates: { canonical },
+    openGraph: { title: product.name, description: product.shortDescription, url: canonical, type: "website" },
+  };
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const [{ data: product, provenance }, { data: properties }] = await Promise.all([
+    getProductBySlug(slug),
+    getTechnicalProperties(),
+  ]);
+  if (!product) notFound();
+
+  const canonical = `${SITE_URL}/products/${slug}`;
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `${canonical}#product`,
+    name: product.name,
+    description: product.shortDescription,
+    url: canonical,
+    category: "Exfoliated vermiculite",
+    brand: { "@type": "Brand", name: "Jyothi Mines & Minerals" },
+    manufacturer: { "@id": `${SITE_URL}/#organization` },
+    additionalProperty: product.grades.map((grade) => ({
+      "@type": "PropertyValue",
+      name: `${grade.name} particle size`,
+      value: `${grade.particleSizeMm.min}–${grade.particleSizeMm.max} mm`,
+      unitText: "mm",
+    })),
+  };
+
+  return (
+    <article className="bg-cream px-5 py-20 text-text-light sm:px-8">
+      <JsonLd data={productSchema} />
+      <BreadcrumbJsonLd items={[{ name: "Home", url: SITE_URL }, { name: "Products", url: `${SITE_URL}/products` }, { name: product.name, url: canonical }]} />
+      <div className="mx-auto max-w-[1240px]">
+        <p className="mb-3 text-[13px] tracking-[0.08em] text-gold-dim">PRODUCT</p>
+        <h1 className="font-display text-[clamp(32px,5vw,52px)] font-normal">{product.name}</h1>
+        <p className="mt-4 max-w-[60ch] text-[17px] text-text-light-mute">{product.shortDescription}</p>
+        <div className="mt-4"><CoaBadge available={product.coaAvailable} /></div>
+        <div className="mt-14 grid gap-10 lg:grid-cols-3">
+          {product.grades.map((grade) => (
+            <div key={grade.id} className="rounded-sm border border-cream-line bg-white p-6">
+              <ParticleSizeVisualizerLoader grade={grade.grade} />
+              <h3 className="mt-5 font-display text-xl">{grade.name}</h3>
+              <p className="text-sm text-gold-dim">{grade.particleSizeMm.min}–{grade.particleSizeMm.max} mm</p>
+              <p className="mt-2 text-sm text-text-light-mute">{grade.description}</p>
+            </div>
+          ))}
+        </div>
+        <section className="mt-16">
+          <h2 className="font-display text-2xl">Technical Properties</h2>
+          <div className="mt-6"><SpecificationTable properties={properties} /></div>
+        </section>
+        <div className="mt-10 grid gap-10 sm:grid-cols-2">
+          <div><h3 className="font-display text-lg">Storage</h3><p className="mt-2 text-sm text-text-light-mute">{product.storageNotes}</p></div>
+          <div><h3 className="font-display text-lg">Safety</h3><p className="mt-2 text-sm text-text-light-mute">{product.safetyNotes}</p></div>
+        </div>
+        {provenance === "local_demo" && <DemoDataNotice className="mt-10" />}
+      </div>
+    </article>
+  );
+}
