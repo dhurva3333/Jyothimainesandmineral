@@ -1,22 +1,22 @@
 import Link from "next/link";
 import type { Route } from "next";
 
-const quickLinks: [Route, string][] = [
+const quickLinks = [
   ["/", "Home"],
   ["/products/vermiculite", "Vermiculite"],
   ["/applications", "Applications"],
   ["/technical", "Technical"],
   ["/about", "About Us"],
   ["/contact", "Contact"],
-];
+] as const;
 
-const applicationLinks: [Route, string][] = [
+const applicationLinks = [
   ["/applications/horticulture", "Horticulture & Nursery"],
   ["/applications/agriculture", "Agricultural Inputs"],
   ["/applications/construction", "Construction & Insulation"],
   ["/applications/industrial", "Industrial Applications"],
   ["/applications/insulation", "Insulation"],
-];
+] as const;
 
 export function Footer() {
   return (
@@ -49,12 +49,12 @@ export function Footer() {
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: [Route, string][] }) {
+function FooterCol({ title, links }: { title: string; links: readonly (readonly [string, string])[] }) {
   return (
     <div>
       <h5 className="mb-4 text-[13px] tracking-wide text-gold-dim">{title}</h5>
       {links.map(([href, label]) => (
-        <Link key={href} href={href} className="mb-2.5 block text-sm text-text-dark-mute">
+        <Link key={href} href={href as Route} className="mb-2.5 block text-sm text-text-dark-mute">
           {label}
         </Link>
       ))}
