@@ -1,7 +1,0 @@
-import type { Metadata } from "next";
-import { getProductBySlug } from "@/lib/data/repository";
-import { ParticleSizeVisualizerLoader } from "@/components/3d/particle-size-visualizer-loader";
-import { SectionHeader } from "@/components/ui/section-header";
-import { DemoDataNotice } from "@/components/ui/demo-data-notice";
-export const metadata: Metadata = { title: "Particle Sizes", description: "Vermiculite particle-size grades and their target applications." };
-export default async function ParticleSizesPage() { const { data: product, provenance } = await getProductBySlug("vermiculite"); const grades = product?.grades ?? []; return <section className="bg-cream px-5 py-20 text-text-light sm:px-8"><div className="mx-auto max-w-[1100px]"><SectionHeader eyebrow="SIZE SELECTION" title={<>Right Size.<br/>Right Application.</>} description="Different sizes for different needs. Particle-size ranges below are typical grade references; Jyothi-specific sieve analysis is pending publication."/><div className="mt-12 grid gap-8 sm:grid-cols-3">{grades.map((g)=><div key={g.id} className="rounded-sm border border-cream-line bg-white p-6"><ParticleSizeVisualizerLoader grade={g.grade}/><h3 className="mt-5 font-display text-xl">{g.name}</h3><p className="text-sm text-gold-dim">{g.particleSizeMm.min}–{g.particleSizeMm.max} mm</p><p className="mt-2 text-sm text-text-light-mute">{g.description}</p></div>)}</div>{provenance === "local_demo" && <DemoDataNotice className="mt-8"/>}</div></section>; }

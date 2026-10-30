@@ -1,9 +1,5 @@
 node_modules
-.next
-.env
-.env.local
-out
-coverage
-playwright-report
-test-results
+dist
 .DS_Store
+.env
+.env.*

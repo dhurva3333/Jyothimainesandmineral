@@ -1,0 +1,24 @@
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import './style.css';
+
+const wishes = ['May your days be full of tiny surprises and big reasons to smile.','Keep being wonderfully weird, endlessly curious and unapologetically you.','And please remember to take breaks from being a professional busy person.'];
+
+function Sparkles(){return <div className="sky" aria-hidden="true">{Array.from({length:42},(_,i)=><i key={i} style={{left:((i*37)%100)+'%',top:((i*61)%100)+'%',animationDelay:(i%7)*-.7+'s',transform:'scale('+(0.45+(i%4)*.22)+')'}}/>)}<span className="shooting shooting-one"/><span className="shooting shooting-two"/></div>}
+function Buddy({wave}){return <div className={'buddy '+(wave?'buddy-wave':'')} aria-label="A cute little birthday creature"><div className="antenna">✦</div><div className="ear ear-left"/><div className="ear ear-right"/><div className="body"><div className="cheek cheek-left"/><div className="cheek cheek-right"/><div className="eyes"><b/><b/></div><div className="smile"/><div className="belly">♡</div></div><div className="feet"><i/><i/></div><span className="buddy-star">✧</span></div>}
+
+function App(){
+ const [opened,setOpened]=useState(false),[hearts,setHearts]=useState([]),[wave,setWave]=useState(false),[wish,setWish]=useState(0);
+ function celebrate(){const batch=Array.from({length:18},(_,i)=>({id:Date.now()+i,x:8+Math.random()*84,delay:Math.random()*.7,symbol:['♡','✦','♥','✧'][i%4]}));setHearts(batch);window.setTimeout(()=>setHearts([]),2600);}
+ return <main className="page"><Sparkles/><div className="moon" aria-hidden="true"/>
+ <header className="topline"><span className="tiny-star">✦</span> A VERY IMPORTANT DAY <span className="tiny-star">✦</span></header>
+ <section className="hero"><p className="eyebrow">the universe has a tiny announcement</p><h1>Happy Birthday,<br/><em>Pilli!</em></h1><p className="subtitle">Today, the stars decided to make a little extra sparkle<br className="desktop"/> because someone special was born.</p>
+ <div className="character-wrap"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><Buddy wave={wave}/><span className="float-note note-one">✧</span><span className="float-note note-two">♡</span><span className="float-note note-three">✦</span></div>
+ <button className="primary" onClick={()=>{setWave(!wave);celebrate();}}>Send a little sparkle <span>✦</span></button><div className="scroll-hint">SCROLL FOR YOUR SURPRISE <span>↓</span></div></section>
+ <section className="wish-section"><div className="section-kicker">A MESSAGE FROM YOUR FRIENDLY UNIVERSE</div><div className="wish-card"><div className="card-stamp">✧ 100% PILLI APPROVED ✧</div><div className="speech">“</div><h2>A little birthday<br/>reminder...</h2><p className="wish-copy">{wishes[wish]}</p><button className="text-button" onClick={()=>setWish((wish+1)%wishes.length)}>Another tiny reminder <span>↗</span></button><div className="card-doodle">☁︎　♡　☁︎</div></div></section>
+ <section className="letter-section"><div className="letter-art">✉</div><p className="eyebrow">psst... there's something for you</p><h2>One tiny envelope.<br/><em>A whole lot of affection.</em></h2>
+ {!opened?<button className="primary envelope-button" onClick={()=>{setOpened(true);celebrate();}}>Open your birthday letter <span>♡</span></button>:<article className="letter"><div className="letter-top">DEAR PILLI,</div><p>Happy Birthday, you little bundle of chaos! 💗</p><p>I hope this year brings you all the happiness, success and beautiful little moments you deserve. Keep smiling, keep being your wonderfully childish self, and don't let your busy-person schedule forget to make room for fun.</p><p>You're a favourite little headache, and honestly, the world is more fun with you in it. Stay exactly as lovely as you are.</p><p className="signoff">With a smile (and a little teasing),<br/><strong>Your friend ✨</strong></p><div className="letter-seal">♡</div></article>}</section>
+ <section className="finale"><div className="finale-stars">✦　✧　⋆　✧　✦</div><h2>Keep shining,<br/><em>birthday girl.</em></h2><p>Even the stars are a little jealous today.</p><button className="celebrate-button" onClick={celebrate}>One last celebration ✨</button><div className="cake" aria-label="Birthday cake"><span className="flame">♨</span><div className="candle"/><div className="icing">♡ ♡ ♡</div><div className="cake-top"/><div className="cake-bottom"/></div><footer>MADE WITH A LITTLE MAGIC, JUST FOR PILLI <span>♡</span></footer></section>
+ {hearts.map(h=><span key={h.id} className="burst" style={{left:h.x+'%',animationDelay:h.delay+'s'}}>{h.symbol}</span>)}</main>;
+}
+createRoot(document.getElementById('root')).render(<App/>);

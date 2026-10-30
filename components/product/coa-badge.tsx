@@ -1,1 +1,0 @@
-export function CoaBadge({available}:{available:boolean}){return <span className={"rounded-full px-2.5 py-1 text-[11px] "+(available?"bg-[#6fae63]/15 text-[#9fc79a]":"bg-text-light-mute/10 text-text-light-mute")}>{available?"CoA available":"CoA not yet published"}</span>}

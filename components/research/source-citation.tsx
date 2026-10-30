@@ -1,2 +1,0 @@
-import type { ResearchSource } from "@/types/domain";
-export function SourceCitation({source}:{source:ResearchSource}){return <li className="border-b border-cream-line py-3 text-sm text-text-light-mute last:border-0"><span className="text-text-light">{source.title}</span>{source.author&&<span> — {source.author}</span>}{source.year&&<span> ({source.year})</span>}<span className="ml-2 rounded-full bg-gold/10 px-2 py-0.5 text-[11px] text-gold-dim">{source.sourceType.replace("_"," ")}</span></li>}
