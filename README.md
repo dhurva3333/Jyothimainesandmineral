@@ -1,7 +1,11 @@
-# A Little Universe for Pilli
+# For Pilli — a little universe
+A mobile-first, interactive birthday experience built with React + Vite.
 
-A playful, dreamy birthday microsite built with React and Vite.
+## Run locally
+`npm install`
+`npm run dev`
 
-Run locally with npm install, then npm run dev. Build with npm run build.
+## Build
+`npm run build`
 
-Includes an animated night sky, a cute cartoon companion, surprise birthday letter, floating hearts and responsive layout. Edit the message in src/main.jsx.
+Ambient audio is synthesized locally with the Web Audio API and starts only after the visitor chooses to enable it. No audio files, trackers, backend, or personal data collection are used.
