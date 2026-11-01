@@ -52,7 +52,10 @@ function DreamScene(){
  </Canvas></div>
 }
 function App(){
- const [screen,setScreen]=useState('intro'),[photoIndex,setPhotoIndex]=useState(0),[selected,setSelected]=useState(null),[wish,setWish]=useState(false),[sound,setSound]=useState(false);\n const audioRef=useRef(null);\n useEffect(()=>()=>stopAmbientMusic(audioRef.current),[]);\n const toggleMusic=()=>{if(sound){stopAmbientMusic(audioRef.current);audioRef.current=null;setSound(false);return;}try{audioRef.current=startAmbientMusic();if(audioRef.current){audioRef.current.ctx.resume();setSound(true);}}catch(e){console.error('Audio could not start',e);}};
+ const [screen,setScreen]=useState('intro'),[photoIndex,setPhotoIndex]=useState(0),[selected,setSelected]=useState(null),[wish,setWish]=useState(false),[sound,setSound]=useState(false);
+ const audioRef=useRef(null);
+ useEffect(()=>()=>stopAmbientMusic(audioRef.current),[]);
+ const toggleMusic=()=>{if(sound){stopAmbientMusic(audioRef.current);audioRef.current=null;setSound(false);return;}try{audioRef.current=startAmbientMusic();if(audioRef.current){audioRef.current.ctx.resume();setSound(true);}}catch(e){console.error('Audio could not start',e);}};
  const nextPhoto=()=>{if(photoIndex<photos.length-1)setPhotoIndex(i=>i+1);else setScreen('album')};
  const openSurprise=()=>{setPhotoIndex(0);setScreen('reveal')};
  const closeModal=()=>setSelected(null);
