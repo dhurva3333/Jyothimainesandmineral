@@ -1,4 +1,4 @@
-import React,{Suspense,useState}from'react';
+import React,{Suspense,useEffect,useRef,useState}from'react';
 import{createRoot}from'react-dom/client';
 import{Canvas}from'@react-three/fiber';
 import{Float,Sparkles,ContactShadows}from'@react-three/drei';
@@ -15,6 +15,19 @@ const photos=[
  {src:'/memories/memory-05.webp',title:'One more for the album',note:'Because one photo is never enough'}
 ];
 const ease=[.22,1,.36,1];
+function startAmbientMusic(){
+ const AudioCtx=window.AudioContext||window.webkitAudioContext;
+ if(!AudioCtx)return null;
+ const ctx=new AudioCtx();
+ const master=ctx.createGain(); master.gain.value=.0001; master.connect(ctx.destination);
+ const filter=ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=720; filter.Q.value=.35; filter.connect(master);
+ const notes=[146.83,220,293.66,369.99];
+ const voices=notes.map((hz,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=i===0?'triangle':'sine';o.frequency.value=hz;g.gain.value=[.15,.09,.055,.025][i];o.connect(g);g.connect(filter);o.start();return o;});
+ const lfo=ctx.createOscillator(),depth=ctx.createGain();lfo.frequency.value=.09;depth.gain.value=260;lfo.connect(depth);depth.connect(filter.frequency);lfo.start();
+ master.gain.setTargetAtTime(.075,ctx.currentTime,1.8);
+ return {ctx,master,voices,lfo};
+}
+function stopAmbientMusic(audio){if(!audio)return;const {ctx,master,voices,lfo}=audio;master.gain.setTargetAtTime(.0001,ctx.currentTime,.35);setTimeout(()=>{voices.forEach(v=>v.stop());lfo.stop();ctx.close();},1500);}
 function Wing({side='left',color='#e9b6d8',small=false}){
  return <motion3d.group position={[side==='left'?-.42:.42,small?-.3:.22,0]} animate={{rotateY:side==='left'?[0,.95,0]:[0,-.95,0],rotateZ:side==='left'?[.2,.42,.2]:[-.2,-.42,-.2]}} transition={{duration:.42,repeat:Infinity,repeatType:'mirror',ease:'easeInOut'}}>
   <mesh scale={small?[.34,.43,.07]:[.53,.67,.09]}><sphereGeometry args={[1,32,24]}/><meshPhysicalMaterial color={color} roughness={.28} metalness={.12} clearcoat={1} clearcoatRoughness={.15}/></mesh>
@@ -39,17 +52,17 @@ function DreamScene(){
  </Canvas></div>
 }
 function App(){
- const [screen,setScreen]=useState('intro'),[photoIndex,setPhotoIndex]=useState(0),[selected,setSelected]=useState(null),[wish,setWish]=useState(false),[sound,setSound]=useState(false);
+ const [screen,setScreen]=useState('intro'),[photoIndex,setPhotoIndex]=useState(0),[selected,setSelected]=useState(null),[wish,setWish]=useState(false),[sound,setSound]=useState(false);\n const audioRef=useRef(null);\n useEffect(()=>()=>stopAmbientMusic(audioRef.current),[]);\n const toggleMusic=()=>{if(sound){stopAmbientMusic(audioRef.current);audioRef.current=null;setSound(false);return;}try{audioRef.current=startAmbientMusic();if(audioRef.current){audioRef.current.ctx.resume();setSound(true);}}catch(e){console.error('Audio could not start',e);}};
  const nextPhoto=()=>{if(photoIndex<photos.length-1)setPhotoIndex(i=>i+1);else setScreen('album')};
  const openSurprise=()=>{setPhotoIndex(0);setScreen('reveal')};
  const closeModal=()=>setSelected(null);
  return <main className="birthday-app">
   <div className="ambient ambient-one"/><div className="ambient ambient-two"/>
-  <header className="topbar"><button className="wordmark" onClick={()=>{setScreen('intro');setPhotoIndex(0)}}>✦ a little universe</button><div className="top-right"><span>MADE FOR DHANUSHA</span><button className="quiet-icon" aria-label="Sound is decorative and currently off" onClick={()=>setSound(v=>!v)}>{sound?<Volume2 size={16}/>:<VolumeX size={16}/>}</button></div></header>
+  <header className="topbar"><button className="wordmark" onClick={()=>{setScreen('intro');setPhotoIndex(0)}}>✦ a little universe</button><div className="top-right"><span>MADE FOR DHANUSHA</span><button className="quiet-icon" aria-label={sound?'Turn birthday music off':'Play soft birthday music'} title={sound?'Turn music off':'Play original ambient birthday music'} onClick={toggleMusic}>{sound?<Volume2 size={16}/>:<VolumeX size={16}/>}</button></div></header>
   <div className="tiny-progress"><i style={{width:screen==='intro'?'12%':screen==='reveal'?((photoIndex+1)/5*48+12)+'%':screen==='album'?'82%':'100%'}}/></div>
   <AnimatePresence mode="wait">
    {screen==='intro'&&<motion.section className="intro screen" key="intro" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20,scale:.98}} transition={{duration:.65,ease}}>
-    <div className="intro-copy"><div className="eyebrow"><span/> A LITTLE SURPRISE, JUST FOR YOU</div><h1>Dhanusha<span className="name-comma">.</span></h1><p className="intro-line">Some people make ordinary days feel a little brighter.</p><p className="intro-small">Today, this little world is yours, Pilli. ♡</p><button className="cta" onClick={openSurprise}>Open your surprise <ArrowRight size={18}/></button><div className="hint">SOUND OPTIONAL · BEST EXPERIENCED FULL SCREEN</div></div>
+    <div className="intro-copy"><div className="eyebrow"><span/> A LITTLE SURPRISE, JUST FOR YOU</div><h1>Dhanusha<span className="name-comma">.</span></h1><p className="intro-line">Some people make ordinary days feel a little brighter.</p><p className="intro-small">Today, this little world is yours, Pilli. ♡</p><button className="cta" onClick={openSurprise}>Open your surprise <ArrowRight size={18}/></button><div className="hint">OPTIONAL ORIGINAL AMBIENT MUSIC · BEST EXPERIENCED FULL SCREEN</div></div>
     <DreamScene/><div className="orbit-label">a tiny universe <span>✦</span></div>
    </motion.section>}
    {screen==='reveal'&&<motion.section className="reveal screen" key="reveal" initial={{opacity:0,y:25}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-18}} transition={{duration:.5,ease}}>
