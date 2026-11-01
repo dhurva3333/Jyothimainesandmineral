@@ -14,6 +14,7 @@ const chapters=[
  {label:'The next chapter',title:'More memories, Dhanusha?',kicker:'A FRIENDSHIP THAT CAN KEEP GROWING',sub:'I really like the friendship we have. I’d love for it to grow even closer, naturally, with more conversations, laughter, trust, and memories. No pressure or big promises — just happy to have you in my life.',button:'Send a little smile'}
 ];
 function Butterfly({className='',delay=0}){return <span className={'butterfly '+className} style={{animationDelay:delay+'s'}} aria-hidden="true"><i/><b/><em/></span>}
+const photos=[{title:'A garden moment',caption:'A little pause in a green corner',pos:'0%'},{title:'A familiar smile',caption:'One of those moments worth keeping',pos:'25%'},{title:'A quiet moment',caption:'A lovely memory from an ordinary day',pos:'50%'},{title:'Blue-day portrait',caption:'A portrait to keep in the little album',pos:'75%'},{title:'Together',caption:'A memory with the whole crew',pos:'100%'}];
 function App(){
  const [page,setPage]=useState(0),[sound,setSound]=useState(false),[wish,setWish]=useState(false),[smile,setSmile]=useState(false);
  const audio=useRef(null);
@@ -33,7 +34,7 @@ function App(){
   <section className={'content '+(page===0?'opening':'')}>
    <div className="eyebrow"><span/> {c.kicker} <span/></div>
    {page===0?<><div className="moon">☾</div><h1 className="hero-name">Dhanusha<span>…</span></h1><h2>Someone made a tiny universe<br/>just for <em>you.</em> ♡</h2><p>{c.sub}</p></>:<><div className="chapter-icon">{['✦','♡','✿','🦋','☁','🎂','✉','♡'][page]}</div><h1>{c.title}</h1><p className="message">{c.sub}</p></>}
-   {page===2&&<div className="photo-placeholders"><div><Camera/><b>Our favourite moments</b><small>Photo space · coming soon</small></div><div><Heart/><b>Little memories</b><small>We can add your photos later</small></div></div>}
+   {page===2&&<div className="photo-gallery" aria-label="Five friendship photos">{photos.map((p,i)=><figure className={'photo-card photo-'+i} key={p.title}><div className="photo-image" role="img" aria-label={p.title} style={{backgroundPosition:p.pos}}/><figcaption><b>{p.title}</b><small>{p.caption}</small></figcaption></figure>)}</div>}
    {page===3&&<div className="joke-chips"><span>Crush detective 👀</span><span>Height department 📏</span><span>“You look like my brother” 😭</span></div>}
    {page===4&&<div className="warm-notes"><span>♡ Easy conversations</span><span>✧ Random laughs</span><span>☁ A friend I’m glad to know</span></div>}
    {page===5&&<div className={'cake '+(wish?'wish-made':'')}><div className="flames">🕯️ 🕯️ 🕯️</div><div className="icing"/><div className="tier top"/><div className="tier bottom"/><div className="plate"/></div>}
