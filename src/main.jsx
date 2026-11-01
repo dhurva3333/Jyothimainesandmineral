@@ -1,57 +1,81 @@
-import React,{useEffect,useRef,useState}from'react';
+import React,{Suspense,useState}from'react';
 import{createRoot}from'react-dom/client';
-import{ArrowLeft,ArrowRight,Volume2,VolumeX,Heart,Music2,Home,Sparkles,Camera,Star}from'lucide-react';
+import{Canvas}from'@react-three/fiber';
+import{Float,Sparkles,ContactShadows}from'@react-three/drei';
+import{motion as motion3d}from'framer-motion-3d';
+import{AnimatePresence,motion}from'framer-motion';
+import{ArrowRight,ArrowLeft,Heart,Expand,Volume2,VolumeX,Sparkles as SparkleIcon,RotateCcw}from'lucide-react';
 import'./style.css';
 
-const chapters=[
- {label:'Welcome',title:'A little universe',kicker:'A SMALL SURPRISE FOR YOU',sub:'Made with a little stardust, a lot of thought, and one very special name.',button:'Enter your birthday world'},
- {label:'Hello',title:'Hi, Dhanusha!',kicker:'YOUR DAY, YOUR LITTLE WORLD',sub:'Today, the stars are taking a moment to celebrate you. I hope this tiny journey makes you smile.',button:'Let’s wander'},
- {label:'Our moments',title:'Little things, lovely memories',kicker:'THE MOMENTS THAT MAKE A FRIENDSHIP',sub:'The everyday conversations, random topics, unexpected laughs, and the little things that make talking feel easy.',button:'One more chapter'},
- {label:'A little teasing',title:'Our very serious investigations',kicker:'A TINY DOSE OF FRIENDLY CHAOS',sub:'You have a whole investigation team dedicated to my crush. I, in return, have been appointed head of the height-jokes department. And somehow I also got cast as your big-brother lookalike. What a career.',button:'Okay, enough teasing'},
- {label:'The real you',title:'What I appreciate about you',kicker:'NO JOKES FOR A MOMENT',sub:'Dhanusha, I genuinely appreciate how easy it is to talk with you. You bring your own warmth and humour into ordinary days. I like that we can be silly, talk about random things, and still have real conversations. I’m glad we became friends.',button:'A birthday wish'},
- {label:'Birthday',title:'Happy Birthday, Dhanusha!',kicker:'THIS MOMENT IS ALL YOURS',sub:'Make a wish. May the year ahead bring you peaceful days, exciting opportunities, good health, confidence, and people who make you feel valued.',button:'Open your letter'},
- {label:'A letter',title:'Dear Dhanusha…',kicker:'A FEW WORDS FROM YOUR FRIEND',sub:'Happy Birthday, Dhanusha! I’m really glad we became friends and that our conversations have become part of the day. I hope you keep finding reasons to laugh, things to look forward to, and people who appreciate the person you are.\n\nThank you for the random talks, the crush investigations, the height jokes, and the big-brother comparisons that somehow became part of our friendship lore. Those little things make this friendship ours.\n\nI hope we make many more memories, support each other through the busy days, and keep being able to talk about absolutely anything. You deserve a year full of good things.\n\nHave the loveliest birthday. ♡',button:'One last little thought'},
- {label:'The next chapter',title:'More memories, Dhanusha?',kicker:'A FRIENDSHIP THAT CAN KEEP GROWING',sub:'I really like the friendship we have. I’d love for it to grow even closer, naturally, with more conversations, laughter, trust, and memories. No pressure or big promises — just happy to have you in my life.',button:'Send a little smile'}
+const photos=[
+ {src:'/memories/memory-01.webp',title:'A little garden moment',note:'A memory worth keeping'},
+ {src:'/memories/memory-02.webp',title:'The group selfie',note:'A little chaos, a lot of smiles'},
+ {src:'/memories/memory-03.webp',title:'A quiet moment',note:'The lovely in-between moments'},
+ {src:'/memories/memory-04.webp',title:'A sunny-day portrait',note:'A moment captured just right'},
+ {src:'/memories/memory-05.webp',title:'One more for the album',note:'Because one photo is never enough'}
 ];
-function Butterfly({className='',delay=0}){return <span className={'butterfly '+className} style={{animationDelay:delay+'s'}} aria-hidden="true"><i/><b/><em/></span>}
-const photos=[{title:'A garden moment',caption:'A little pause in a green corner',pos:'0%'},{title:'A familiar smile',caption:'One of those moments worth keeping',pos:'25%'},{title:'A quiet moment',caption:'A lovely memory from an ordinary day',pos:'50%'},{title:'Blue-day portrait',caption:'A portrait to keep in the little album',pos:'75%'},{title:'Together',caption:'A memory with the whole crew',pos:'100%'}];
+const ease=[.22,1,.36,1];
+function Wing({side='left',color='#e9b6d8',small=false}){
+ return <motion3d.group position={[side==='left'?-.42:.42,small?-.3:.22,0]} animate={{rotateY:side==='left'?[0,.95,0]:[0,-.95,0],rotateZ:side==='left'?[.2,.42,.2]:[-.2,-.42,-.2]}} transition={{duration:.42,repeat:Infinity,repeatType:'mirror',ease:'easeInOut'}}>
+  <mesh scale={small?[.34,.43,.07]:[.53,.67,.09]}><sphereGeometry args={[1,32,24]}/><meshPhysicalMaterial color={color} roughness={.28} metalness={.12} clearcoat={1} clearcoatRoughness={.15}/></mesh>
+  <mesh position={[side==='left'?.08:-.08,-.42,.025]} scale={[.25,.31,.055]}><sphereGeometry args={[1,24,18]}/><meshPhysicalMaterial color={side==='left'?'#c9b7f4':'#f5c3cf'} roughness={.3} clearcoat={.8}/></mesh>
+ </motion3d.group>
+}
+function ButterflyModel(){
+ return <Float speed={1.25} rotationIntensity={.14} floatIntensity={.35}>
+  <motion3d.group animate={{rotateY:[-.22,.22,-.22],rotateZ:[-.08,.08,-.08],y:[0,.14,0]}} transition={{duration:5,repeat:Infinity,ease:'easeInOut'}}>
+   <Wing side="left"/><Wing side="right"/>
+   <Wing side="left" small/><Wing side="right" small/>
+   <mesh position={[0,0,0.1]} scale={[.075,.56,.075]}><capsuleGeometry args={[.07,.65,8,16]}/><meshStandardMaterial color="#58436f" metalness={.3} roughness={.35}/></mesh>
+   <mesh position={[-.055,.53,.1]} rotation={[0,0,-.25]}><cylinderGeometry args={[.012,.012,.35,8]}/><meshStandardMaterial color="#58436f"/></mesh>
+   <mesh position={[.055,.53,.1]} rotation={[0,0,.25]}><cylinderGeometry args={[.012,.012,.35,8]}/><meshStandardMaterial color="#58436f"/></mesh>
+  </motion3d.group>
+ </Float>
+}
+function DreamScene(){
+ return <div className="scene3d"><Canvas dpr={[1,1.5]} camera={{position:[0,0,5.2],fov:38}} gl={{alpha:true,antialias:true,powerPreference:'low-power'}}>
+  <ambientLight intensity={1.1}/><directionalLight position={[3,4,5]} intensity={2.1} color="#fff0dc"/><pointLight position={[-3,-2,2]} intensity={1.6} color="#d8a6ff"/>
+  <Suspense fallback={null}><ButterflyModel/><Float speed={.7} floatIntensity={.18}><mesh position={[1.35,-.8,-.8]} scale={.72}><icosahedronGeometry args={[1,2]}/><meshPhysicalMaterial color="#f3c8dc" roughness={.15} metalness={.12} transmission={.45} thickness={.7} clearcoat={1}/></mesh></Float><Sparkles count={46} scale={5.5} size={2.5} speed={.35} color="#fff0ce"/><ContactShadows position={[0,-1.55,0]} opacity={.22} scale={5} blur={2.5} far={4}/></Suspense>
+ </Canvas></div>
+}
 function App(){
- const [page,setPage]=useState(0),[sound,setSound]=useState(false),[wish,setWish]=useState(false),[smile,setSmile]=useState(false);
- const audio=useRef(null);
- const go=n=>{setPage(Math.max(0,Math.min(chapters.length-1,n)));window.scrollTo({top:0,behavior:'smooth'})};
- const toggleSound=()=>{
-  if(sound){if(audio.current){audio.current.osc.stop();audio.current.ctx.close();audio.current=null}setSound(false);return}
-  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const master=ctx.createGain();master.gain.value=.018;master.connect(ctx.destination);const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.value=174.61;gain.gain.value=.55;osc.connect(gain).connect(master);osc.start();audio.current={ctx,osc};setSound(true)}catch{}
- };
- useEffect(()=>()=>{if(audio.current){audio.current.osc.stop();audio.current.ctx.close()}},[]);
- const c=chapters[page];
- return <main className={'world scene-'+page}>
-  <div className="sky"/><div className="stars">{Array.from({length:48},(_,i)=><i key={i} style={{left:(i*37%100)+'%',top:(i*61%100)+'%',animationDelay:(i%8)*-.6+'s'}}/>)}</div>
-  <div className="cloud cloud-a"/><div className="cloud cloud-b"/><div className="garden garden-left">✿ ✾ ❀</div><div className="garden garden-right">❀ ✿ ✾</div>
-  <Butterfly className="bf-one" delay={0}/><Butterfly className="bf-two" delay={1.3}/><Butterfly className="bf-three" delay={2.1}/>
-  <header className="header"><button className="brand" onClick={()=>go(0)}>✦ a little universe</button><div className="head-right"><span>{String(page+1).padStart(2,'0')} / 08</span><button className="sound" onClick={toggleSound} aria-label={sound?'Turn sound off':'Turn sound on'}>{sound?<Volume2/>:<VolumeX/>}<small>{sound?'Sound on':'Sound off'}</small></button></div></header>
-  <div className="progress"><i style={{width:((page+1)/chapters.length*100)+'%'}}/></div>
-  <section className={'content '+(page===0?'opening':'')}>
-   <div className="eyebrow"><span/> {c.kicker} <span/></div>
-   {page===0?<><div className="moon">☾</div><h1 className="hero-name">Dhanusha<span>…</span></h1><h2>Someone made a tiny universe<br/>just for <em>you.</em> ♡</h2><p>{c.sub}</p></>:<><div className="chapter-icon">{['✦','♡','✿','🦋','☁','🎂','✉','♡'][page]}</div><h1>{c.title}</h1><p className="message">{c.sub}</p></>}
-   {page===2&&<div className="photo-gallery" aria-label="Five friendship photos">{photos.map((p,i)=><figure className={'photo-card photo-'+i} key={p.title}><div className="photo-image" role="img" aria-label={p.title} style={{backgroundPosition:p.pos}}/><figcaption><b>{p.title}</b><small>{p.caption}</small></figcaption></figure>)}</div>}
-   {page===3&&<div className="joke-chips"><span>Crush detective 👀</span><span>Height department 📏</span><span>“You look like my brother” 😭</span></div>}
-   {page===4&&<div className="warm-notes"><span>♡ Easy conversations</span><span>✧ Random laughs</span><span>☁ A friend I’m glad to know</span></div>}
-   {page===5&&<div className={'cake '+(wish?'wish-made':'')}><div className="flames">🕯️ 🕯️ 🕯️</div><div className="icing"/><div className="tier top"/><div className="tier bottom"/><div className="plate"/></div>}
-   {page===5&&<button className="secondary" onClick={()=>setWish(true)}>{wish?'Your wish is on its way ✨':'Make a wish, Dhanusha'} <Sparkles/></button>}
-   {page===6&&<article className="letter-card"><div className="letter-stamp">FOR DHANUSHA · WITH WARMTH</div><div className="letter-text">{c.sub.split('\n\n').map((x,i)=><p key={i}>{x}</p>)}</div><div className="signoff">— Your friend ♡</div></article>}
-   {page===7&&<div className="friendship-mark"><Heart fill="currentColor"/><span>More trust</span><span>More laughter</span><span>More memories</span></div>}
-   {page===7&&<button className="secondary" onClick={()=>setSmile(true)}>{smile?'A smile sent back to you ♡':'Send a little smile'} <Heart/></button>}
-   {page!==5&&page!==6&&page!==7&&<button className="primary" onClick={()=>go(page+1)}>{c.button} <ArrowRight/></button>}
-   {page===6&&<button className="primary" onClick={()=>go(7)}>{c.button} <ArrowRight/></button>}
-   {page===7&&<button className="text-link" onClick={()=>go(0)}><Home/> Replay the journey</button>}
-  </section>
-  <nav className="journey-nav" aria-label="Birthday journey navigation">
-   <button className="nav-arrow" disabled={page===0} onClick={()=>go(page-1)}><ArrowLeft/><span>Back</span></button>
-   <div className="nav-center"><div className="dots">{chapters.map((x,i)=><button key={x.label} className={i===page?'active':''} aria-label={'Go to '+x.label} onClick={()=>go(i)}/>)}</div><small>{c.label}</small></div>
-   <button className="nav-arrow next" disabled={page===7} onClick={()=>go(page+1)}><span>Next</span><ArrowRight/></button>
-  </nav>
-  <footer>MADE WITH A LITTLE STARDUST FOR <b>DHANUSHA</b> ✦</footer>
+ const [screen,setScreen]=useState('intro'),[photoIndex,setPhotoIndex]=useState(0),[selected,setSelected]=useState(null),[wish,setWish]=useState(false),[sound,setSound]=useState(false);
+ const nextPhoto=()=>{if(photoIndex<photos.length-1)setPhotoIndex(i=>i+1);else setScreen('album')};
+ const openSurprise=()=>{setPhotoIndex(0);setScreen('reveal')};
+ const closeModal=()=>setSelected(null);
+ return <main className="birthday-app">
+  <div className="ambient ambient-one"/><div className="ambient ambient-two"/>
+  <header className="topbar"><button className="wordmark" onClick={()=>{setScreen('intro');setPhotoIndex(0)}}>✦ a little universe</button><div className="top-right"><span>MADE FOR DHANUSHA</span><button className="quiet-icon" aria-label="Sound is decorative and currently off" onClick={()=>setSound(v=>!v)}>{sound?<Volume2 size={16}/>:<VolumeX size={16}/>}</button></div></header>
+  <div className="tiny-progress"><i style={{width:screen==='intro'?'12%':screen==='reveal'?((photoIndex+1)/5*48+12)+'%':screen==='album'?'82%':'100%'}}/></div>
+  <AnimatePresence mode="wait">
+   {screen==='intro'&&<motion.section className="intro screen" key="intro" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20,scale:.98}} transition={{duration:.65,ease}}>
+    <div className="intro-copy"><div className="eyebrow"><span/> A LITTLE SURPRISE, JUST FOR YOU</div><h1>Dhanusha<span className="name-comma">.</span></h1><p className="intro-line">Some people make ordinary days feel a little brighter.</p><p className="intro-small">Today, this little world is yours, Pilli. ♡</p><button className="cta" onClick={openSurprise}>Open your surprise <ArrowRight size={18}/></button><div className="hint">SOUND OPTIONAL · BEST EXPERIENCED FULL SCREEN</div></div>
+    <DreamScene/><div className="orbit-label">a tiny universe <span>✦</span></div>
+   </motion.section>}
+   {screen==='reveal'&&<motion.section className="reveal screen" key="reveal" initial={{opacity:0,y:25}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-18}} transition={{duration:.5,ease}}>
+    <div className="reveal-head"><div className="eyebrow"><span/> LITTLE MOMENTS, ONE BY ONE</div><div className="counter">0{photoIndex+1}<i>/</i>05</div></div>
+    <div className="memory-stage">
+     <div className="memory-glow"/>
+     <AnimatePresence mode="wait"><motion.figure className="memory-photo" key={photos[photoIndex].src} initial={{opacity:0,scale:.82,rotate:photoIndex%2===0?-5:5,y:28}} animate={{opacity:1,scale:1,rotate:0,y:0}} exit={{opacity:0,scale:.9,rotate:photoIndex%2===0?4:-4,y:-24}} transition={{duration:.65,ease}}>
+      <img src={photos[photoIndex].src} alt={photos[photoIndex].title} fetchPriority="high"/><figcaption><b>{photos[photoIndex].title}</b><span>{photos[photoIndex].note}</span></figcaption>
+     </motion.figure></AnimatePresence>
+     <div className="memory-side-note">A MEMORY<br/>TO KEEP <span>♡</span></div>
+    </div>
+    <div className="reveal-footer"><div className="photo-dots">{photos.map((p,i)=><i key={p.src} className={i<=photoIndex?'done':''}/>)}</div><button className="cta" onClick={nextPhoto}>{photoIndex===4?'Bring them together':'Next memory'} <ArrowRight size={18}/></button><button className="skip-link" onClick={()=>setScreen('album')}>See the album now</button></div>
+   </motion.section>}
+   {screen==='album'&&<motion.section className="album screen" key="album" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}} transition={{duration:.55,ease}}>
+    <div className="eyebrow"><span/> ALL THE LITTLE MOMENTS <span/></div><h2>Our little <em>album.</em></h2><p className="album-intro">Five moments. One lovely collection.</p>
+    <div className="album-grid">{photos.map((p,i)=><motion.button className={'album-card album-card-'+i} key={p.src} onClick={()=>setSelected(i)} initial={{opacity:0,y:35,rotate:i%2?4:-4}} animate={{opacity:1,y:0,rotate:i%2?2:-2}} transition={{delay:i*.09,duration:.55,ease}} whileHover={{y:-9,rotate:0,scale:1.035}} whileTap={{scale:.97}}><img src={p.src} alt={p.title}/><span className="album-caption">{p.title}</span><span className="album-number">0{i+1}</span></motion.button>)}</div>
+    <button className="cta album-cta" onClick={()=>setScreen('finale')}>A birthday wish for you <Heart size={17}/></button>
+   </motion.section>}
+   {screen==='finale'&&<motion.section className="finale screen" key="finale" initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}} exit={{opacity:0,scale:1.02}} transition={{duration:.7,ease}}>
+    <div className="finale-orb"><DreamScene/></div><div className="eyebrow"><span/> THE DAY IS YOURS, DHANUSHA <span/></div><h2>Keep shining,<br/><em>Pilli.</em></h2><p className="finale-message">I’m genuinely glad we became friends. Thank you for the random talks, the laughter, and all the little moments that became our own. I hope this year brings you joy, confidence, good surprises, and people who make you feel appreciated.</p>
+    <button className={'wish-button '+(wish?'wished':'')} onClick={()=>setWish(true)}>{wish?'A wish sent into the universe ✨':'Make a wish'} <SparkleIcon size={17}/></button>
+    <div className="signature">Happy Birthday, Dhanusha <span>♡</span></div><button className="replay" onClick={()=>{setScreen('intro');setPhotoIndex(0);setWish(false)}}><RotateCcw size={14}/> Replay the surprise</button>
+   </motion.section>}
+  </AnimatePresence>
+  <AnimatePresence>{selected!==null&&<motion.div className="lightbox" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={closeModal}><motion.div className="lightbox-inner" initial={{scale:.88,y:20}} animate={{scale:1,y:0}} exit={{scale:.9}} onClick={e=>e.stopPropagation()}><button className="lightbox-close" onClick={closeModal}>×</button><img src={photos[selected].src} alt={photos[selected].title}/><div className="lightbox-caption">{photos[selected].title}</div></motion.div></motion.div>}</AnimatePresence>
+  <footer className="site-footer">A SMALL CORNER OF THE UNIVERSE · MADE WITH CARE</footer>
  </main>
 }
 createRoot(document.getElementById('root')).render(<React.StrictMode><App/></React.StrictMode>);
