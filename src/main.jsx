@@ -8,11 +8,11 @@ import{ArrowRight,ArrowLeft,Heart,Expand,Volume2,VolumeX,Sparkles as SparkleIcon
 import'./style.css';
 
 const photos=[
- {src:'/memories/memory-01.webp',title:'A little garden moment',note:'A memory worth keeping'},
- {src:'/memories/memory-02.webp',title:'The group selfie',note:'A little chaos, a lot of smiles'},
- {src:'/memories/memory-03.webp',title:'A quiet moment',note:'The lovely in-between moments'},
- {src:'/memories/memory-04.webp',title:'A sunny-day portrait',note:'A moment captured just right'},
- {src:'/memories/memory-05.webp',title:'One more for the album',note:'Because one photo is never enough'}
+ {src:'/Public/memories/file_000000005fe48208a306bbac5df9e54a.jpg',title:'A little garden moment',note:'A memory worth keeping'},
+ {src:'/Public/memories/file_0000000015248208a7efb08a007dc5e2.jpg',title:'The group selfie',note:'A little chaos, a lot of smiles'},
+ {src:'/Public/memories/file_000000001da88208bd819d69c2bd4e13.jpg',title:'A quiet moment',note:'The lovely in-between moments'},
+ {src:'/Public/memories/file_00000000a86c82119c4afcac1bf9c6c0.jpg',title:'A sunny-day portrait',note:'A moment captured just right'},
+ {src:'/Public/memories/file_000000008bf4820883b09966ad8f58ff.jpg',title:'One more for the album',note:'Because one photo is never enough'}
 ];
 const ease=[.22,1,.36,1];
 function startAmbientMusic(){
