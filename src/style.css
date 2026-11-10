@@ -23,3 +23,63 @@
 .final-actions button:hover{transform:translateY(-3px);background:#37216c}
 button:focus-visible,a:focus-visible{outline:2px solid #ffe5a8;outline-offset:4px}
 @media(max-width:760px){.photo-card img{object-fit:cover}.photo-open{font-size:7px}.toast{bottom:65px;font-size:11px}.final-actions button{min-height:42px}}
+
+/* Full visual refresh: closer to the supplied illustrated storyboard */
+.world{background:#120b38}
+.world:before{background:
+radial-gradient(ellipse at 50% 8%,#ffb4dc4d,transparent 34%),
+radial-gradient(ellipse at 10% 80%,#aa8cff48,transparent 38%),
+radial-gradient(ellipse at 90% 90%,#ff9dcb45,transparent 35%),
+linear-gradient(155deg,#080d35 0%,#28205f 42%,#5a2c80 70%,#170e43 100%)}
+.stars i{width:2px;height:2px;box-shadow:0 0 12px 3px #fff2c9}
+.page{padding-top:24px;padding-bottom:26px}
+.hero-art{height:clamp(145px,24vh,230px)}
+.hero-art:before{content:"";position:absolute;inset:8% 20%;border-radius:50%;background:radial-gradient(ellipse,#ffb4e65a,transparent 68%);filter:blur(18px)}
+.hero .pill{margin-top:8px}
+.ready .mascot{font-size:96px;text-shadow:0 0 30px #ffb5e7}
+.content-page h2,.journey h2,.cake-page h2,.letter h2,.bestfriend h2,.finale h2{ text-shadow:0 3px 20px #170a3c99}
+.photo-grid{gap:17px;margin:24px auto 8px;max-width:1080px}
+.photo-card{border:5px solid #fff9;border-bottom-width:24px;background:#fff7ed;box-shadow:0 15px 38px #09051f99;border-radius:3px}
+.photo-card:nth-child(1){transform:rotate(-3deg) translateY(5px)}
+.photo-card:nth-child(2){transform:rotate(2deg) translateY(-3px)}
+.photo-card:nth-child(3){transform:rotate(-1deg) translateY(7px)}
+.photo-card:nth-child(4){transform:rotate(3deg) translateY(-2px)}
+.photo-card:nth-child(5){transform:rotate(-2deg) translateY(6px)}
+.photo-card img{height:clamp(155px,29vh,285px);object-position:center 35%}
+.photo-card b{font:15px 'Caveat',cursive;color:#67346e}
+.photo-card small{font-size:9px}
+.real-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:760px;margin:22px auto}
+.real-list article{display:flex;align-items:center;gap:13px;text-align:left;padding:13px 16px;border:1px solid #fff9;border-radius:18px;background:linear-gradient(120deg,#fff3e2,#ffd4e9);color:#61316d;box-shadow:0 8px 24px #11072f55}
+.real-list article>span{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#ffb8dc;color:#fff;font-size:21px;flex:none}
+.real-list b,.real-list small{display:block}
+.real-list b{font:17px 'Caveat',cursive}
+.real-list small{font:10px 'DM Sans',sans-serif;color:#91658f;margin-top:3px}
+.memories-next .sub{max-width:600px;margin:8px auto 18px;line-height:1.6}
+.memory-mosaic{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:760px;margin:16px auto}
+.memory-mosaic button{padding:5px;background:#fff3e7;border:1px solid #fff;border-radius:4px;box-shadow:0 10px 24px #0b062a88;transform:rotate(-2deg);cursor:pointer}
+.memory-mosaic button:nth-child(even){transform:rotate(2deg) translateY(9px)}
+.memory-mosaic img{display:block;width:100%;height:clamp(100px,19vh,170px);object-fit:cover}
+.future-note{display:inline-block;background:linear-gradient(90deg,#fff0d5,#ffcbe7);color:#62306f;padding:12px 24px;border-radius:24px;font:18px 'Caveat',cursive;box-shadow:0 8px 24px #11072f55}
+.friend-promises{display:grid;gap:6px;max-width:380px;margin:14px auto}
+.friend-promises span{background:#fff0d9;color:#713875;border-radius:18px;padding:7px 14px;font-size:12px;box-shadow:0 4px 12px #160a3f44}
+.text-choice{border:0;background:none;color:#ffe5c6;text-decoration:underline;font:12px 'DM Sans',sans-serif;padding:8px;cursor:pointer}
+.cake-art{transform:scale(1.06)}
+.letter{box-shadow:0 20px 65px #09051fbb;border-radius:4px}
+.bottom-nav>button{background:linear-gradient(120deg,#21124fdd,#5b3379cc);border-color:#fff9}
+@media(max-width:760px){
+ .page{padding:12px 13px 18px}
+ .hero-art{height:clamp(130px,19vh,175px)}
+ .photo-grid{gap:12px;margin:18px auto}
+ .photo-card img{height:clamp(150px,23vh,205px)}
+ .photo-card b{font-size:13px}
+ .real-list{grid-template-columns:1fr;gap:7px;margin:12px auto}
+ .real-list article{padding:9px 12px}
+ .real-list b{font-size:15px}
+ .real-list small{font-size:9px}
+ .memory-mosaic{grid-template-columns:repeat(2,1fr);max-width:420px}
+ .memory-mosaic img{height:clamp(105px,17vh,150px)}
+ .friend-promises{gap:5px;margin:10px auto}
+ .friend-promises span{font-size:10px;padding:6px 12px}
+ .memories-next .sub{font-size:12px}
+ .future-note{font-size:16px;padding:9px 15px}
+}
