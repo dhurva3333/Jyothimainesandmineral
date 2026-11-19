@@ -5,11 +5,11 @@ import{ArrowLeft,ArrowRight,Heart,Volume2,VolumeX,Music,Gift,Star,RotateCcw,Spar
 import'./style.css';
 
 const photos=[
- {src:'/memories/memory-01.jpg',title:'A little garden moment',note:'A memory worth keeping'},
- {src:'/memories/memory-02.jpg',title:'The group selfie',note:'A little chaos, a lot of smiles'},
- {src:'/memories/memory-03.jpg',title:'A quiet moment',note:'The lovely in-between moments'},
- {src:'/memories/memory-04.jpg',title:'A sunny-day portrait',note:'A moment captured just right'},
- {src:'/memories/memory-05.jpg',title:'One more for the album',note:'Because one photo is never enough'}
+ {src:import.meta.env.BASE_URL+'memories/memory-01.jpg',title:'A little garden moment',note:'A memory worth keeping'},
+ {src:import.meta.env.BASE_URL+'memories/memory-02.jpg',title:'The group selfie',note:'A little chaos, a lot of smiles'},
+ {src:import.meta.env.BASE_URL+'memories/memory-03.jpg',title:'A quiet moment',note:'The lovely in-between moments'},
+ {src:import.meta.env.BASE_URL+'memories/memory-04.jpg',title:'A sunny-day portrait',note:'A moment captured just right'},
+ {src:import.meta.env.BASE_URL+'memories/memory-05.jpg',title:'One more for the album',note:'Because one photo is never enough'}
 ];
 const pageNames=['Welcome','Ready?','Birthday journey','Our memories','Little teasing','All the good things','Surprises','Birthday cake','A letter for you','The real you','More memories','Best friends?','Thank you'];
 function startMusic(){
@@ -34,8 +34,8 @@ function App(){
  const shareJourney=async()=>{const data={title:"Dhanusha's Magical Birthday Journey",text:'A little birthday universe made just for you, Dhanusha 💗',url:window.location.href};try{if(navigator.share)await navigator.share(data);else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(data.url);notify('Birthday link copied! Share it with Dhanusha 💗')}else setModal('Copy this page link from your browser and send the surprise to Dhanusha 💗')}catch(e){if(e?.name!=='AbortError')notify('You can copy the website link from your browser to share it.')}};
  const photoCards=photos.map((p,i)=><button className="photo-card" key={p.src} onClick={()=>setModal(p.src)}><img src={p.src} alt={p.title} loading={i>1?'lazy':'eager'}/><b>{p.title}</b><small>{p.note}</small><span className="photo-open">Tap to view ✦</span></button>);
  return <main className="world"><Decor/>
-  <header className="bar"><button className="brand" onClick={()=>go(0)}>✦ DHANUSHA'S MAGICAL JOURNEY</button><div className="bar-right"><span>{String(page+1).padStart(2,'0')} / 11</span><button className="music" onClick={toggle} aria-label={music?'Turn music off':'Play music'}>{music?<Volume2/>:<VolumeX/>}</button></div></header>
-  <div className="progress"><i style={{width:((page+1)/11*100)+'%'}}/></div>
+  <header className="bar"><button className="brand" onClick={()=>go(0)}>✦ DHANUSHA'S MAGICAL JOURNEY</button><div className="bar-right"><span>{String(page+1).padStart(2,'0')} / 13</span><button className="music" onClick={toggle} aria-label={music?'Turn music off':'Play music'}>{music?<Volume2/>:<VolumeX/>}</button></div></header>
+  <div className="progress"><i style={{width:((page+1)/13*100)+'%'}}/></div>
   <AnimatePresence mode="wait">
    <motion.section className="page" key={page} initial={{opacity:0,y:22,scale:.985}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-18,scale:.99}} transition={{duration:.42}}>
     {page===0&&<div className="hero layout-center"><div className="hero-art"><span className="crescent">☾</span><span className="fairy">🦋</span><span className="sparkle s1">✦</span><span className="sparkle s2">✧</span><span className="cloud">☁</span></div><p className="kicker">A LITTLE WORLD MADE JUST FOR YOU</p><h1>Dhanusha<span>...</span></h1><p className="lead">Someone made<br/>a tiny universe<br/>just for you.</p><button className="pill primary" onClick={next}>Enter Your Birthday World <ArrowRight/></button></div>}
